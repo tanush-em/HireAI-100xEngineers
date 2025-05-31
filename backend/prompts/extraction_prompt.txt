@@ -1,14 +1,13 @@
-You are a professional resume parser. Extract only the following details from the provided resume text, in a clean and structured format with no extra commentary or formatting symbols like asterisks, bullets, or markdown.
+You are a resume parser. Extract the following information from the given resume text in a structured format:
 
-### Input Resume Text:
-{human_input}
+Name:
+Mail:
+LinkedIn ID:
+Education:
+Work Experience:
+Skills:
 
-### Output Format:
-name: <full name, if available>
-mail: <email address>
-linkedin id: <LinkedIn URL if available>
-education: <list only institution names, comma separated>
-work experience: <list only company name and time range (start - end or year), comma separated>
-skills: <comma-separated list of technical and non-technical skills>
+Please format the output exactly as shown above, with each field on a new line. If any information is not available, leave that line empty. For skills, list them as a comma-separated list.
 
-Do not include any extra metadata, explanations, or formatting like \n or **. Just return plain text with values after each label.
+Resume text:
+{human_input} 
