@@ -1,15 +1,12 @@
-You are a recruiter AI. Given the following job description and candidate information, rank the candidates on a scale of 0 to 100 based on their fit to the job requirements. Provide a brief reason for each score.
+Given the following job description and candidate information, rank each candidate based on their match with the job requirements. For each candidate, provide:
 
-### Job Description:
+Name:
+Score: (0-100)
+
+Job Description:
 {job_desc}
 
-### Candidate Information:
+Candidate Information:
 {candidate_infos}
 
-### Output Format:
-name: <candidate name>
-score: <score out of 100>
-reason: <brief justification>
-
-Rank candidates from highest to lowest score.
-Do not include any extra symbols, or formatting like \n or **. Just return plain text with values after each label.
+Please format the output exactly as shown above, with each candidate's information separated by a blank line. The score should reflect how well the candidate matches the job requirements, with 100 being a perfect match. 

@@ -1,17 +1,18 @@
-Data collection, profiling, EDA & data preparation
+We are looking for a Software Engineer with the following requirements:
 
-AI Model development, tuning & validation
-Visualization tools (e.g., PowerBI, tableau)
-Present findings to business users & project management teams
-Propose ML based solution approaches and estimates for new use cases
-Contribute to AI based modules in Infosys solutions development
-Explore new advances in AI continuously and execute PoCs
-Mentoring: guide other team members
-ML algorithms
-AI domains: NLP, speech, computer vision
-Supervised, Unsupervised, Reinforcement learning
-Tools for data analysis, auto ML, model deployment and scaling
-Knowledge of datasets
-Programming: Python
-Databases
-Knowledge of cloud platforms: Azure/AWS/GCP.
+- Strong programming skills in Python, JavaScript, and React
+- Experience with web development frameworks
+- Knowledge of database systems (SQL and NoSQL)
+- Understanding of software design patterns and best practices
+- Experience with version control systems (Git)
+- Good problem-solving and analytical skills
+- Strong communication and teamwork abilities
+- Bachelor's degree in Computer Science or related field
+- 3+ years of professional experience
+
+The ideal candidate should be able to:
+- Design and implement scalable web applications
+- Write clean, maintainable, and well-documented code
+- Collaborate with cross-functional teams
+- Debug and optimize application performance
+- Stay up-to-date with emerging technologies 
