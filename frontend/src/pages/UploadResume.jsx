@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Upload, Search, FileText, Loader2, AlertCircle } from 'lucide-react';
 import JSZip from 'jszip';
+import { useNavigate } from 'react-router-dom';
 
 const UploadResume = () => {
+  const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState("");
   const [error, setError] = useState("");
 
   const handleFileChange = (e) => {
@@ -57,17 +58,17 @@ const UploadResume = () => {
       formData.append("query", query);
 
       // Send to Flask backend
-      const res = await axios.post("http://localhost:5000/analyze_resumes", formData, {
+      await axios.post("http://localhost:5000/analyze_resumes", formData, {
         headers: { 
           "Content-Type": "multipart/form-data",
           "Accept": "application/json"
         }
       });
       
-      setResponse(res.data.response || "No response received.");
+      // Redirect to loading page
+      navigate('/loading');
     } catch (err) {
       setError(err.response?.data?.error || err.message || "An error occurred while processing the resumes");
-      setResponse("");
     } finally {
       setLoading(false);
     }
@@ -179,37 +180,6 @@ const UploadResume = () => {
             </button>
           </form>
         </div>
-
-        {/* Response Section */}
-        {response && (
-          <div className="mt-8 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-            <div className="bg-gradient-to-r from-green-600 to-teal-600 p-6">
-              <h3 className="text-xl font-semibold text-white flex items-center gap-2">
-                <FileText className="w-5 h-5" />
-                Analysis Results
-              </h3>
-            </div>
-            <div className="p-8">
-              {response.startsWith("Error:") ? (
-                <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-xl">
-                  <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-red-800 mb-1">Error Occurred</h4>
-                    <pre className="whitespace-pre-wrap text-red-700 font-mono text-sm">
-                      {response}
-                    </pre>
-                  </div>
-                </div>
-              ) : (
-                <div className="prose max-w-none">
-                  <pre className="whitespace-pre-wrap text-gray-700 leading-relaxed bg-gray-50 p-6 rounded-xl border border-gray-200 font-mono text-sm">
-                    {response}
-                  </pre>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
