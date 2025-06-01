@@ -90,8 +90,8 @@ const LandingPage = () => {
               },
               {
                 icon: <Zap className="h-8 w-8 text-blue-600" />,
-                title: "Personalized Outreach",
-                description: "Automate and personalize candidate outreach to engage top talent effectively."
+                title: "Candidate Outreach",
+                description: "Automate and personalize candidate outreach to engage top talent effectively and smoothly."
               }
             ].map((feature, index) => (
               <motion.div
