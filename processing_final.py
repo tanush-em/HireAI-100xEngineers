@@ -84,7 +84,7 @@ def rank_candidates(candidates_info):
     return cleaned_output
 
 # Append ranks and upload to MongoDB
-def append_ranks_to_candidates(candidates_info, rankings_text):
+def append_ranks_to_candidates(candidates_info, rankings_text, session_id):
     ranking_blocks = rankings_text.strip().split("\n\n")
     name_to_score = {}
 
@@ -113,7 +113,8 @@ def append_ranks_to_candidates(candidates_info, rankings_text):
             "work_experience": "",
             "skills": [],
             "rank": idx,
-            "score": 0
+            "score": 0,
+            "session_id":session_id,
         }
 
         for line in lines:
