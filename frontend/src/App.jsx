@@ -5,7 +5,7 @@ import UploadResume from './pages/UploadResume';
 import CandidateList from './pages/CandidateList';
 import CandidateDetail from './pages/CandidateDetail';
 import LandingPage from './pages/landingPage.jsx'
-import TransitionLoading from './pages/loadingPage.jsx'
+import TransitionLoading from './pages/loading.jsx'
 import ResultPage from './pages/resultPage.jsx'
 
 function App() {

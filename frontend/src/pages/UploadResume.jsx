@@ -58,15 +58,15 @@ const UploadResume = () => {
       formData.append("query", query);
 
       // Send to Flask backend
-      await axios.post("http://localhost:5000/analyze_resumes", formData, {
+      const res = await axios.post("http://127.0.0.1:5000/analyze_resumes", formData, {
         headers: { 
           "Content-Type": "multipart/form-data",
           "Accept": "application/json"
         }
       });
-      
+      const data = await res.data;
       // Redirect to loading page
-      navigate('/loading');
+      navigate('/loading',{state:{session_id: data.session_id}});
     } catch (err) {
       setError(err.response?.data?.error || err.message || "An error occurred while processing the resumes");
     } finally {
