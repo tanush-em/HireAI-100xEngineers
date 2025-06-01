@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Dashboard from './pages/Dashboard';
+import ResumeDashboard from './pages/Dashboard';
 import UploadResume from './pages/UploadResume';
 import CandidateList from './pages/CandidateList';
 import CandidateDetail from './pages/CandidateDetail';
@@ -16,7 +16,7 @@ function App() {
         <main className="container mx-auto px-4 py-8">
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<ResumeDashboard />} />
             <Route path="/loading" element={<TransitionLoading />} />
             <Route path="/result" element={<ResultPage />} />
             <Route path="/upload" element={<UploadResume />} />

@@ -1,190 +1,696 @@
-import React from 'react';
-import { FileText, Users, Search, Clock, TrendingUp, Award, Briefcase, GraduationCap } from 'lucide-react';
+"use client"
 
-const Dashboard = () => {
-  // Dummy data for charts and statistics
-  const topSkills = [
-    { name: 'Python', count: 45, percentage: 85 },
-    { name: 'JavaScript', count: 38, percentage: 72 },
-    { name: 'React', count: 32, percentage: 60 },
-    { name: 'Node.js', count: 28, percentage: 53 },
-    { name: 'Machine Learning', count: 25, percentage: 47 },
-  ];
+import React from "react"
+import { useState, useEffect } from "react"
+import {
+  Users,
+  Trophy,
+  TrendingUp,
+  Star,
+  Mail,
+  Linkedin,
+  GraduationCap,
+  Briefcase,
+  Code,
+  X,
+  ChevronDown,
+  ChevronUp,
+  BarChart3,
+  Search,
+  Download,
+  RefreshCw,
+} from "lucide-react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
+import { Button } from "../components/ui/button"
+import { Input } from "../components/ui/input"
+import { Badge } from "../components/ui/badge"
+import { Separator } from "../components/ui/separator"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../components/ui/chart"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell } from "recharts"
 
-  const recentActivities = [
-    { type: 'upload', name: 'John Doe', role: 'Senior Software Engineer', time: '2 hours ago' },
-    { type: 'search', query: 'Python developers with ML experience', time: '3 hours ago' },
-    { type: 'upload', name: 'Jane Smith', role: 'Full Stack Developer', time: '5 hours ago' },
-    { type: 'search', query: 'React developers with 5+ years experience', time: '6 hours ago' },
-    { type: 'upload', name: 'Mike Johnson', role: 'Data Scientist', time: '8 hours ago' },
-  ];
+const ResumeDashboard = () => {
+  const [candidates, setCandidates] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [selectedCandidate, setSelectedCandidate] = useState(null)
+  const [sortBy, setSortBy] = useState("rank")
+  const [sortOrder, setSortOrder] = useState("asc")
+  const [expandedRows, setExpandedRows] = useState(new Set())
+  const [searchTerm, setSearchTerm] = useState("")
+  const [filterScore, setFilterScore] = useState("")
 
-  const experienceDistribution = [
-    { range: '0-2 years', count: 15 },
-    { range: '2-5 years', count: 35 },
-    { range: '5-8 years', count: 25 },
-    { range: '8+ years', count: 15 },
-  ];
+  useEffect(() => {
+    fetchCandidates()
+  }, [])
+
+  const fetchCandidates = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch("/api/candidates")
+      const result = await response.json()
+
+      if (result.success) {
+        setCandidates(result.data)
+      } else {
+        setError(result.error)
+      }
+    } catch (err) {
+      setError("Failed to fetch data")
+      console.error("Error:", err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const totalCandidates = candidates.length
+  const averageScore =
+    candidates.length > 0 ? Math.round(candidates.reduce((sum, c) => sum + c.score, 0) / candidates.length) : 0
+  const topPerformer =
+    candidates.length > 0 ? candidates.reduce((max, c) => (c.score > max.score ? c : max), candidates[0]) : null
+  const skillDistribution = candidates.reduce((acc, candidate) => {
+    candidate.skills?.forEach((skill) => {
+      acc[skill] = (acc[skill] || 0) + 1
+    })
+    return acc
+  }, {})
+
+  const topSkills = Object.entries(skillDistribution)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 10)
+    .map(([skill, count]) => ({ skill, count }))
+
+  const topCandidatesByScore = [...candidates]
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5)
+    .map((candidate) => ({
+      name: candidate.name,
+      score: candidate.score,
+      color:
+        candidate.score >= 90
+          ? "#10b981"
+          : candidate.score >= 80
+            ? "#3b82f6"
+            : candidate.score >= 70
+              ? "#f59e0b"
+              : candidate.score >= 60
+                ? "#f97316"
+                : "#ef4444",
+    }))
+
+  const chartConfig = {
+    count: {
+      label: "Candidates",
+      color: "hsl(var(--chart-1))",
+    },
+    skill: {
+      label: "Skill",
+      color: "hsl(var(--chart-2))",
+    },
+  }
+
+  const filteredCandidates = candidates.filter((candidate) => {
+    const matchesSearch =
+      candidate.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      candidate.mail?.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesScore =
+      filterScore === "" ||
+      (filterScore === "90+" && candidate.score >= 90) ||
+      (filterScore === "80-89" && candidate.score >= 80 && candidate.score < 90) ||
+      (filterScore === "70-79" && candidate.score >= 70 && candidate.score < 80) ||
+      (filterScore === "60-69" && candidate.score >= 60 && candidate.score < 70) ||
+      (filterScore === "0-59" && candidate.score < 60)
+    return matchesSearch && matchesScore
+  })
+
+  const sortedCandidates = [...filteredCandidates].sort((a, b) => {
+    if (sortBy === "score") {
+      if (sortOrder === "asc") {
+        return b.score - a.score
+      } else {
+        return a.score - b.score
+      }
+    }
+    return a.rank - b.rank
+  })
+
+  const handleSort = (field) => {
+    if (field === "score") {
+      if (sortBy === field) {
+        setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+      } else {
+        setSortBy(field)
+        setSortOrder("asc")
+      }
+    }
+  }
+
+  const toggleRowExpansion = (candidateId) => {
+    const newExpanded = new Set(expandedRows)
+    if (newExpanded.has(candidateId)) {
+      newExpanded.delete(candidateId)
+    } else {
+      newExpanded.add(candidateId)
+    }
+    setExpandedRows(newExpanded)
+  }
+
+  const getRankBadgeColor = (rank) => {
+    if (rank === 1) return "bg-gradient-to-r from-yellow-400 to-yellow-600 text-white shadow-lg"
+    if (rank === 2) return "bg-gradient-to-r from-gray-300 to-gray-500 text-white shadow-lg"
+    if (rank === 3) return "bg-gradient-to-r from-amber-500 to-amber-700 text-white shadow-lg"
+    if (rank <= 10) return "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md"
+    return "bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 shadow-sm"
+  }
+
+  const getScoreColor = (score) => {
+    if (score >= 90) return "text-green-600 font-bold"
+    if (score >= 80) return "text-blue-600 font-semibold"
+    if (score >= 70) return "text-yellow-600 font-semibold"
+    if (score >= 60) return "text-orange-600 font-medium"
+    return "text-red-600 font-medium"
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md">
+          <CardContent className="flex flex-col items-center justify-center p-8">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+            <p className="text-gray-600 text-center">Loading dashboard...</p>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md">
+          <CardContent className="flex flex-col items-center justify-center p-8">
+            <div className="text-red-500 text-4xl mb-4">⚠️</div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error Loading Data</h3>
+            <p className="text-gray-600 text-center mb-4">{error}</p>
+            <Button onClick={fetchCandidates} className="w-full">
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Retry
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <div className="container mx-auto px-4 py-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          <p className="mt-2 text-gray-600">Welcome to your resume analysis dashboard</p>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-            <div className="flex items-center">
-              <div className="p-3 bg-blue-100 rounded-lg">
-                <FileText className="w-6 h-6 text-blue-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Resumes</p>
-                <p className="text-2xl font-semibold text-gray-900">248</p>
-                <p className="text-sm text-green-600 mt-1">↑ 12% from last month</p>
-              </div>
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-2">
+                Resume Ranking Dashboard
+              </h1>
+              <p className="text-gray-600 text-lg">Comprehensive analytics and candidate insights</p>
             </div>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-            <div className="flex items-center">
-              <div className="p-3 bg-purple-100 rounded-lg">
-                <Users className="w-6 h-6 text-purple-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Active Candidates</p>
-                <p className="text-2xl font-semibold text-gray-900">42</p>
-                <p className="text-sm text-green-600 mt-1">↑ 8% from last month</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-            <div className="flex items-center">
-              <div className="p-3 bg-green-100 rounded-lg">
-                <Search className="w-6 h-6 text-green-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Searches Today</p>
-                <p className="text-2xl font-semibold text-gray-900">12</p>
-                <p className="text-sm text-green-600 mt-1">↑ 15% from yesterday</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-            <div className="flex items-center">
-              <div className="p-3 bg-orange-100 rounded-lg">
-                <Clock className="w-6 h-6 text-orange-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Avg. Response Time</p>
-                <p className="text-2xl font-semibold text-gray-900">2.4s</p>
-                <p className="text-sm text-green-600 mt-1">↓ 0.3s from last week</p>
-              </div>
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm">
+                <Download className="w-4 h-4 mr-2" />
+                Export
+              </Button>
+              <Button onClick={fetchCandidates} size="sm">
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Refresh
+              </Button>
             </div>
           </div>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Top Skills */}
-          <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100">
-            <div className="px-6 py-4 border-b border-gray-100">
-              <h2 className="text-lg font-semibold text-gray-900">Top Skills Distribution</h2>
-            </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                {topSkills.map((skill, index) => (
-                  <div key={index}>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm font-medium text-gray-700">{skill.name}</span>
-                      <span className="text-sm text-gray-500">{skill.count} candidates</span>
-                    </div>
-                    <div className="w-full bg-gray-100 rounded-full h-2">
-                      <div
-                        className="bg-blue-600 h-2 rounded-full"
-                        style={{ width: `${skill.percentage}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Experience Distribution */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-            <div className="px-6 py-4 border-b border-gray-100">
-              <h2 className="text-lg font-semibold text-gray-900">Experience Distribution</h2>
-            </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                {experienceDistribution.map((exp, index) => (
-                  <div key={index} className="flex items-center">
-                    <div className="w-24 text-sm text-gray-600">{exp.range}</div>
-                    <div className="flex-1">
-                      <div className="w-full bg-gray-100 rounded-full h-2">
-                        <div
-                          className="bg-purple-600 h-2 rounded-full"
-                          style={{ width: `${(exp.count / 90) * 100}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                    <div className="w-12 text-right text-sm text-gray-600">{exp.count}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Recent Activity */}
-          <div className="lg:col-span-3 bg-white rounded-xl shadow-sm border border-gray-100">
-            <div className="px-6 py-4 border-b border-gray-100">
-              <h2 className="text-lg font-semibold text-gray-900">Recent Activity</h2>
-            </div>
-            <div className="divide-y divide-gray-100">
-              {recentActivities.map((activity, index) => (
-                <div key={index} className="px-6 py-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className={`p-2 rounded-lg ${
-                        activity.type === 'upload' ? 'bg-blue-50' : 'bg-green-50'
-                      }`}>
-                        {activity.type === 'upload' ? (
-                          <FileText className="w-5 h-5 text-blue-600" />
-                        ) : (
-                          <Search className="w-5 h-5 text-green-600" />
-                        )}
-                      </div>
-                      <div>
-                        {activity.type === 'upload' ? (
-                          <>
-                            <p className="text-sm font-medium text-gray-900">New resume uploaded</p>
-                            <p className="text-sm text-gray-500">{activity.name} - {activity.role}</p>
-                          </>
-                        ) : (
-                          <>
-                            <p className="text-sm font-medium text-gray-900">New search performed</p>
-                            <p className="text-sm text-gray-500">{activity.query}</p>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                    <span className="text-sm text-gray-500">{activity.time}</span>
-                  </div>
+        {/* KPI Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8">
+          <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-blue-100 text-sm font-medium">Total Candidates</p>
+                  <p className="text-3xl font-bold">{totalCandidates}</p>
                 </div>
-              ))}
+                <div className="p-3 bg-white/20 rounded-lg">
+                  <Users className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-lg bg-gradient-to-br from-green-500 to-green-600 text-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-green-100 text-sm font-medium">Average Score</p>
+                  <p className="text-3xl font-bold">{averageScore}</p>
+                </div>
+                <div className="p-3 bg-white/20 rounded-lg">
+                  <TrendingUp className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-lg bg-gradient-to-br from-yellow-500 to-yellow-600 text-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-yellow-100 text-sm font-medium">Top Performer</p>
+                  <p className="text-lg font-bold truncate">{topPerformer?.name || "N/A"}</p>
+                  <p className="text-yellow-100 text-sm">Score: {topPerformer?.score || 0}</p>
+                </div>
+                <div className="p-3 bg-white/20 rounded-lg">
+                  <Trophy className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-lg bg-gradient-to-br from-purple-500 to-purple-600 text-white">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-purple-100 text-sm font-medium">Top Skill</p>
+                  <p className="text-lg font-bold truncate">{topSkills[0]?.skill || "N/A"}</p>
+                  <p className="text-purple-100 text-sm">{topSkills[0]?.count || 0} candidates</p>
+                </div>
+                <div className="p-3 bg-white/20 rounded-lg">
+                  <Star className="h-6 w-6" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Analytics Section */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-6">
+          {/* Top Skills Chart */}
+          <Card className="border-0 shadow-lg">
+            <CardHeader className="pb-2">
+              <div className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5 text-blue-600" />
+                <CardTitle className="text-lg">Top Skills Distribution</CardTitle>
+              </div>
+              <CardDescription>Most in-demand skills across all candidates</CardDescription>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <ChartContainer config={chartConfig} className="h-[280px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={topSkills} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                    <XAxis dataKey="skill" tick={{ fontSize: 12 }} angle={-45} textAnchor="end" height={80} />
+                    <YAxis tick={{ fontSize: 12 }} />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <Bar dataKey="count" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} className="fill-blue-500" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </CardContent>
+          </Card>
+
+          {/* Top Candidates Chart */}
+          <Card className="border-0 shadow-lg">
+            <CardHeader className="pb-2">
+              <div className="flex items-center gap-2">
+                <Trophy className="h-5 w-5 text-yellow-600" />
+                <CardTitle className="text-lg">Top Candidates</CardTitle>
+              </div>
+              <CardDescription>Top {topCandidatesByScore.length} performers by score</CardDescription>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <ChartContainer config={chartConfig} className="h-[280px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={topCandidatesByScore}
+                    layout="vertical"
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} className="opacity-30" />
+                    <XAxis type="number" domain={[0, 100]} />
+                    <YAxis
+                      type="category"
+                      dataKey="name"
+                      width={100}
+                      tick={{ fontSize: 12 }}
+                      tickFormatter={(value) => (value.length > 12 ? `${value.substring(0, 12)}...` : value)}
+                    />
+                    <ChartTooltip
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          return (
+                            <div className="bg-white p-2 border border-gray-200 shadow-md rounded-md">
+                              <p className="font-medium">{payload[0].payload.name}</p>
+                              <p className="text-sm">
+                                Score: <span className="font-semibold">{payload[0].value}</span>/100
+                              </p>
+                            </div>
+                          )
+                        }
+                        return null
+                      }}
+                    />
+                    <Bar dataKey="score" radius={[0, 4, 4, 0]}>
+                      {topCandidatesByScore.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Filters and Search */}
+        <Card className="border-0 shadow-lg mb-6">
+          <CardContent className="p-6">
+            <div className="flex flex-col lg:flex-row gap-4">
+              <div className="flex-1">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                  <Input
+                    placeholder="Search candidates by name or email..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <select
+                  value={filterScore}
+                  onChange={(e) => setFilterScore(e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">All Scores</option>
+                  <option value="90+">90+ Excellent</option>
+                  <option value="80-89">80-89 Good</option>
+                  <option value="70-79">70-79 Average</option>
+                  <option value="60-69">60-69 Below Average</option>
+                  <option value="0-59">0-59 Poor</option>
+                </select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Leaderboard */}
+        <Card className="border-0 shadow-lg">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl">Candidate Leaderboard</CardTitle>
+            <CardDescription>
+              Showing {sortedCandidates.length} of {totalCandidates} candidates
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50 border-b">
+                  <tr>
+                    <th className="px-4 lg:px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-auto p-0 font-medium text-gray-500 hover:text-gray-700"
+                      >
+                        Rank
+                      </Button>
+                    </th>
+                    <th className="px-4 lg:px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-auto p-0 font-medium text-gray-500 hover:text-gray-700"
+                      >
+                        Candidate
+                      </Button>
+                    </th>
+                    <th className="px-4 lg:px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleSort("score")}
+                        className="h-auto p-0 font-medium text-gray-500 hover:text-gray-700"
+                      >
+                        Score
+                        {sortBy === "score" &&
+                          (sortOrder === "asc" ? (
+                            <ChevronUp className="ml-1 h-4 w-4" />
+                          ) : (
+                            <ChevronDown className="ml-1 h-4 w-4" />
+                          ))}
+                      </Button>
+                    </th>
+                    <th className="hidden lg:table-cell px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Skills
+                    </th>
+                    <th className="px-4 lg:px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {sortedCandidates.map((candidate) => {
+                    const candidateId = candidate._id?.$oid || candidate._id
+                    const isExpanded = expandedRows.has(candidateId)
+
+                    return (
+                      <React.Fragment key={candidateId}>
+                        <tr className="hover:bg-gray-50 transition-colors">
+                          <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
+                            <Badge className={`${getRankBadgeColor(candidate.rank)} border-0`}>#{candidate.rank}</Badge>
+                          </td>
+                          <td className="px-4 lg:px-6 py-4">
+                            <div className="flex items-center">
+                              <div className="flex-shrink-0 h-10 w-10">
+                                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-md">
+                                  <span className="text-sm font-medium text-white">
+                                    {candidate.name?.charAt(0)?.toUpperCase() || "?"}
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="ml-4 min-w-0 flex-1">
+                                <div className="text-sm font-medium text-gray-900 truncate">{candidate.name}</div>
+                                <div className="text-sm text-gray-500 truncate">{candidate.mail}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
+                            <div className={`text-sm ${getScoreColor(candidate.score)}`}>{candidate.score}/100</div>
+                          </td>
+                          <td className="hidden lg:table-cell px-6 py-4">
+                            <div className="flex flex-wrap gap-1">
+                              {candidate.skills?.slice(0, 2).map((skill, index) => (
+                                <Badge key={index} variant="secondary" className="text-xs">
+                                  {skill}
+                                </Badge>
+                              ))}
+                              {candidate.skills?.length > 2 && (
+                                <Badge variant="outline" className="text-xs">
+                                  +{candidate.skills.length - 2}
+                                </Badge>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
+                            <div className="flex gap-2">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => toggleRowExpansion(candidateId)}
+                                className="text-blue-600 hover:text-blue-800"
+                              >
+                                {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setSelectedCandidate(candidate)}
+                                className="text-blue-600 hover:text-blue-800"
+                              >
+                                View
+                              </Button>
+                            </div>
+                          </td>
+                        </tr>
+
+                        {/* Expanded Row */}
+                        {isExpanded && (
+                          <tr className="bg-gray-50">
+                            <td colSpan={5} className="px-4 lg:px-6 py-4">
+                              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                <div>
+                                  <h4 className="font-medium text-gray-900 mb-2 flex items-center">
+                                    <GraduationCap className="h-4 w-4 mr-2" />
+                                    Education
+                                  </h4>
+                                  <p className="text-sm text-gray-700">{candidate.education}</p>
+                                </div>
+                                <div>
+                                  <h4 className="font-medium text-gray-900 mb-2 flex items-center">
+                                    <Briefcase className="h-4 w-4 mr-2" />
+                                    Work Experience
+                                  </h4>
+                                  <p className="text-sm text-gray-700 line-clamp-3">{candidate.work_experience}</p>
+                                </div>
+                                <div className="lg:col-span-2">
+                                  <h4 className="font-medium text-gray-900 mb-2 flex items-center">
+                                    <Code className="h-4 w-4 mr-2" />
+                                    All Skills ({candidate.skills?.length || 0})
+                                  </h4>
+                                  <div className="flex flex-wrap gap-1">
+                                    {candidate.skills?.map((skill, index) => (
+                                      <Badge key={index} variant="secondary" className="text-xs">
+                                        {skill}
+                                      </Badge>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </React.Fragment>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Candidate Detail Modal */}
+        {selectedCandidate && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm overflow-y-auto h-full w-full z-50 p-4">
+            <div className="relative top-4 mx-auto max-w-2xl">
+              <Card className="border-0 shadow-2xl">
+                <CardHeader className="pb-4">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="text-xl">Candidate Profile</CardTitle>
+                      <CardDescription>Detailed information and analytics</CardDescription>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setSelectedCandidate(null)}
+                      className="text-gray-400 hover:text-gray-600"
+                    >
+                      <X className="h-5 w-5" />
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {/* Basic Info */}
+                  <div className="flex items-center space-x-4">
+                    <div className="h-16 w-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-lg">
+                      <span className="text-xl font-medium text-white">
+                        {selectedCandidate.name?.charAt(0)?.toUpperCase() || "?"}
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-xl font-bold text-gray-900">{selectedCandidate.name}</h4>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-2">
+                        <div className="flex items-center text-gray-600">
+                          <Mail className="h-4 w-4 mr-1" />
+                          <span className="text-sm">{selectedCandidate.mail}</span>
+                        </div>
+                        {selectedCandidate.linkedin && (
+                          <div className="flex items-center text-gray-600">
+                            <Linkedin className="h-4 w-4 mr-1" />
+                            <a
+                              href={`https://linkedin.com/${selectedCandidate.linkedin}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-sm text-blue-600 hover:underline"
+                            >
+                              LinkedIn Profile
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Score and Rank */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <Card className="border border-yellow-200 bg-yellow-50">
+                      <CardContent className="p-4">
+                        <div className="flex items-center">
+                          <Trophy className="h-5 w-5 text-yellow-600 mr-2" />
+                          <span className="text-sm font-medium text-gray-600">Rank</span>
+                        </div>
+                        <p className="text-2xl font-bold text-gray-900 mt-1">#{selectedCandidate.rank}</p>
+                      </CardContent>
+                    </Card>
+                    <Card className="border border-blue-200 bg-blue-50">
+                      <CardContent className="p-4">
+                        <div className="flex items-center">
+                          <Star className="h-5 w-5 text-blue-600 mr-2" />
+                          <span className="text-sm font-medium text-gray-600">Score</span>
+                        </div>
+                        <p className={`text-2xl font-bold mt-1 ${getScoreColor(selectedCandidate.score)}`}>
+                          {selectedCandidate.score}/100
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Education */}
+                  <div>
+                    <div className="flex items-center mb-3">
+                      <GraduationCap className="h-5 w-5 text-gray-600 mr-2" />
+                      <h5 className="font-semibold text-gray-900">Education</h5>
+                    </div>
+                    <Card className="border border-gray-200 bg-gray-50">
+                      <CardContent className="p-4">
+                        <p className="text-gray-700">{selectedCandidate.education}</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Work Experience */}
+                  <div>
+                    <div className="flex items-center mb-3">
+                      <Briefcase className="h-5 w-5 text-gray-600 mr-2" />
+                      <h5 className="font-semibold text-gray-900">Work Experience</h5>
+                    </div>
+                    <Card className="border border-gray-200 bg-gray-50">
+                      <CardContent className="p-4">
+                        <p className="text-gray-700">{selectedCandidate.work_experience}</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Skills */}
+                  <div>
+                    <div className="flex items-center mb-3">
+                      <Code className="h-5 w-5 text-gray-600 mr-2" />
+                      <h5 className="font-semibold text-gray-900">Skills ({selectedCandidate.skills?.length || 0})</h5>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedCandidate.skills?.map((skill, index) => (
+                        <Badge key={index} variant="secondary" className="text-sm">
+                          {skill}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Dashboard; 
+export default ResumeDashboard 
