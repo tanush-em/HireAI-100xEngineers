@@ -1,36 +1,73 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Upload, Search, FileText, Loader2, AlertCircle } from 'lucide-react';
+import JSZip from 'jszip';
 
 const UploadResume = () => {
   const [files, setFiles] = useState([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState("");
+  const [error, setError] = useState("");
 
   const handleFileChange = (e) => {
-    setFiles(Array.from(e.target.files));
+    const selectedFiles = Array.from(e.target.files);
+    const pdfFiles = selectedFiles.filter(file => file.type === 'application/pdf');
+    
+    if (pdfFiles.length !== selectedFiles.length) {
+      setError("Please select only PDF files");
+      setFiles([]);
+      return;
+    }
+    
+    setError("");
+    setFiles(pdfFiles);
+  };
+
+  const createZipFile = async (files) => {
+    const zip = new JSZip();
+    
+    // Add each PDF file to the zip
+    files.forEach(file => {
+      zip.file(file.name, file);
+    });
+    
+    // Generate the zip file
+    const zipBlob = await zip.generateAsync({ type: "blob" });
+    return zipBlob;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!files.length || !query) {
-      alert("Please upload resumes and enter a query");
+      setError("Please upload PDF resumes and enter a query");
       return;
     }
 
-    const formData = new FormData();
-    files.forEach((file, idx) => formData.append(`files`, file));
-    formData.append("query", query);
-
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:5000/upload_and_query", formData, {
-        headers: { "Content-Type": "multipart/form-data" }
+      setError("");
+      
+      // Create zip file from PDFs
+      const zipBlob = await createZipFile(files);
+      
+      // Create FormData and append zip file and query
+      const formData = new FormData();
+      formData.append("resumes_zip", zipBlob, "resumes.zip");
+      formData.append("query", query);
+
+      // Send to Flask backend
+      const res = await axios.post("http://localhost:5000/analyze_resumes", formData, {
+        headers: { 
+          "Content-Type": "multipart/form-data",
+          "Accept": "application/json"
+        }
       });
+      
       setResponse(res.data.response || "No response received.");
     } catch (err) {
-      setResponse("Error: " + err.message);
+      setError(err.response?.data?.error || err.message || "An error occurred while processing the resumes");
+      setResponse("");
     } finally {
       setLoading(false);
     }
@@ -45,7 +82,7 @@ const UploadResume = () => {
             Upload & Query Resumes
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Upload resumes and query them with natural language to find candidates with specific skills and experience.
+            Upload multiple PDF resumes and query them with natural language to find candidates with specific skills and experience.
           </p>
         </div>
 
@@ -53,7 +90,7 @@ const UploadResume = () => {
         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6">
             <h3 className="text-xl font-semibold text-white">Upload & Query Resumes</h3>
-            <p className="text-blue-100 mt-1">Select your resume folder and ask any question</p>
+            <p className="text-blue-100 mt-1">Select multiple PDF resumes and ask any question</p>
           </div>
 
           <form onSubmit={handleSubmit} className="p-8 space-y-8">
@@ -61,13 +98,12 @@ const UploadResume = () => {
             <div className="space-y-3">
               <label className="flex items-center gap-2 text-lg font-semibold text-gray-900">
                 <Upload className="w-5 h-5 text-blue-600" />
-                Upload Resume Folder
+                Upload PDF Resumes
               </label>
               <div className="relative">
                 <input
                   type="file"
-                  webkitdirectory="true"
-                  directory=""
+                  accept=".pdf"
                   multiple
                   onChange={handleFileChange}
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
@@ -75,16 +111,28 @@ const UploadResume = () => {
                 <div className="border-2 border-dashed border-blue-300 rounded-xl p-8 text-center hover:border-blue-400 transition-colors bg-blue-50/50">
                   <Upload className="w-12 h-12 text-blue-400 mx-auto mb-4" />
                   <p className="text-lg font-medium text-gray-700">
-                    Click to select resume folder
+                    Click to select PDF resumes
                   </p>
                   <p className="text-sm text-gray-500 mt-1">
-                    Choose a folder containing multiple resume files
+                    Choose multiple PDF files
                   </p>
                   {files.length > 0 && (
                     <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
                       <p className="text-green-700 font-medium">
-                        {files.length} files selected
+                        {files.length} PDF files selected
                       </p>
+                      <ul className="mt-2 text-sm text-green-600">
+                        {files.map((file, index) => (
+                          <li key={index} className="truncate">
+                            {file.name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {error && (
+                    <div className="mt-4 p-3 bg-red-50 rounded-lg border border-red-200">
+                      <p className="text-red-700 font-medium">{error}</p>
                     </div>
                   )}
                 </div>
