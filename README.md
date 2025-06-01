@@ -1,66 +1,101 @@
 # Buildathon - Radons
 
-## Resume Parsing, Extraction, Scoring, Ranking Implemented
+* **Deployed Application**: [Link](#)
+* **Demo Video**: [Link](#)
+  
+## Overview
 
-### Features
+* **Buildathon - Radons** is an AI-powered resume screening platform designed to streamline the recruitment process. 
+* It enables HR professionals to upload resumes in PDF format, which are then processed by a Large Language Model (LLM) to extract and structure candidate information. 
+* The system evaluates and ranks candidates based on their alignment with a given job description, presenting the results through an interactive analytics dashboard and a chatbot interface for efficient candidate assessment.
 
-* Extracts text from PDF resumes in the `resume/` folder
-* Uses LLM to extract structured candidate data
-* Ranks candidates based on a given job description
-* Saves both raw and ranked output to the `output/` folder
-* Stores all candidate data in MongoDB
+## Features
 
-### Setup
+* **Resume Upload**: HR personnel can upload multiple resumes in PDF format.
+* **LLM-Powered Parsing**: Utilizes advanced LLMs to extract and structure information from resumes.
+* **Candidate Ranking**: Compares candidate profiles against job descriptions and assigns relevance scores.
+* **Interactive Dashboard**: Visualizes candidate data and rankings for easy analysis.
+* **Chatbot Interface**: Allows users to query candidate information conversationally.
 
-1. Clone this repository
-2. Create and activate a virtual environment
-3. Install dependencies
+## Tech Stack
 
-```bash
-pip install -r requirements.txt
+* **Frontend**: React.js
+* **Backend**: Node.js, Express.js
+* **AI & NLP**: Python, OpenAI GPT (via Groq API), LangChain
+* **Database**: MongoDB
+* **PDF Processing**: PyPDF2
+* **Data Visualization**: Chart.js, D3.js
+* **Environment Management**: Python virtual environments, `.env` files
+
+## System Architecture
+
+```mermaid
+graph TD
+    A[HR Uploads Resumes] --> B[PDF Parsing]
+    B --> C[LLM Processing]
+    C --> D[Structured Data Extraction]
+    D --> E[Candidate Scoring & Ranking]
+    E --> F[Data Storage in MongoDB]
+    F --> G[Interactive Dashboard]
+    F --> H[Chatbot Interface]
 ```
 
-4. Create a `.env` file with the following:
+## Getting Started
 
-```
-GROQ_API_KEY=your_groq_api_key
-MONGODB_URI=http://localhost:27017/resume_ranking
-```
+### Prerequisites
 
-5. Create an empty folder named `output` at the root of the project if it doesn't already exist.
+* Node.js and npm installed
+* Python 3.8 or higher
+* MongoDB instance running
+* Groq API key for LLM access
 
-6. Place all PDF resumes inside the `resume/` folder.
+### Installation
 
-7. Run the main script:
+1. **Clone the repository**:
 
-```bash
-python extract.py
-```
+   ```bash
+   git clone https://github.com/rakheshkrishna2005/Buildathon.git
+   cd Buildathon
+   ```
 
-This will:
+2. **Set up the backend**:
 
-* Extract candidate information from resumes
-* Rank candidates based on the job description
-* Save the results in the `output/` folder
-* Upload all candidate data to the configured MongoDB instance
+   ```bash
+   cd backend
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
 
-## MongoDB Schema
+3. **Configure environment variables**:
 
-Each document inserted into the `candidates` collection follows this structure:
+   Create a `.env` file in the `backend` directory with the following content:
 
-```json
-{
-  "_id": {
-    "$oid": "6839fa8ad6f16f802b8e8975"
-  },
-  "file_name": "john_doe_resume.pdf",
-  "name": "JOHN DOE",
-  "mail": "johndoe@example.com",
-  "linkedin": "linkedin.com/in/john-doe-dev",
-  "education": "ABC Institute of Technology, XYZ Senior Secondary School",
-  "work_experience": "TechNova Solutions (January 2024 - March 2024), ByteForge Technologies (August 2023), Open Source Hackathon (September 2023 - October 2023)",
-  "skills": "Python, Java, HTML, CSS, JavaScript, React, Node.js, MongoDB, Flask, TensorFlow, Pandas, Git",
-  "rank": 4,
-  "score": 58
-}
-```
+   ```env
+   GROQ_API_KEY=your_groq_api_key
+   MONGODB_URI=mongodb://localhost:27017/resume_ranking
+   ```
+
+4. **Run the backend server**:
+
+   ```bash
+   python app.py
+   ```
+
+5. **Set up the frontend**:
+
+   ```bash
+   cd ../frontend
+   npm install
+   npm start
+   ```
+
+   The application will be available at `http://localhost:3000`.
+
+## Usage
+
+1. **Upload Resumes**: Navigate to the upload section and select PDF resumes to upload.
+2. **Processing**: The system parses the PDFs and extracts structured data using the LLM.
+3. **Ranking**: Candidates are scored and ranked based on the provided job description.
+4. **Dashboard**: View the interactive dashboard to analyze candidate rankings and details.
+5. **Chatbot**: Use the chatbot interface to query specific information about candidates.
