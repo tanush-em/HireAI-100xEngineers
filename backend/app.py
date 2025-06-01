@@ -5,6 +5,7 @@ load_dotenv()
 # from routes.chatbot_routes import chat_blueprint
 from routes.resumeProcessing import resumeProcessBlueprint
 
+load_dotenv()
 app = Flask(__name__)
 CORS(app)
 

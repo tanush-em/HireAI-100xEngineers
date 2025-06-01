@@ -5,6 +5,8 @@ import os
 import uuid
 import traceback
 from datetime import datetime
+from utils.helpers import process_resumes_in_folder,rank_candidates 
+from utils.db import append_ranks_to_candidates
 
 resumeProcessBlueprint = Blueprint('resume_api',__name__)
 
@@ -40,6 +42,9 @@ def analyze_resumes():
         print(f"[{datetime.now()}] [INFO] Extracted zip file")
 
         # ----- PROCESSING STAGE -----
+        candidates_info = process_resumes_in_folder()
+        ranking_text = rank_candidates(candidates_info)
+        append_ranks_to_candidates(candidates_info, ranking_text,session_id)
         # Placeholder for resume processing logic
         result = {
             'summary': 'Resume analysis complete',
