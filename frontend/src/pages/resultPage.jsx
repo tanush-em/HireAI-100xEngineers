@@ -1,268 +1,262 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { MessageCircle, User, Briefcase, Star, Send, Search } from "lucide-react";
-import { Button } from "../components/button";
-import { Input } from "../components/input";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/card";
-
-const candidates = [
-  { 
-    id: 1, 
-    name: "John Doe", 
-    role: "Frontend Developer", 
-    score: 95,
-    skills: ["React", "TypeScript", "Next.js"],
-    experience: "5+ years",
-    avatar: "JD"
-  },
-  { 
-    id: 2, 
-    name: "Jane Smith", 
-    role: "Backend Developer", 
-    score: 92,
-    skills: ["Node.js", "Python", "PostgreSQL"],
-    experience: "7+ years",
-    avatar: "JS"
-  },
-  { 
-    id: 3, 
-    name: "Alice Brown", 
-    role: "Data Scientist", 
-    score: 89,
-    skills: ["Python", "Machine Learning", "SQL"],
-    experience: "4+ years",
-    avatar: "AB"
-  },
-  { 
-    id: 4, 
-    name: "Bob Wilson", 
-    role: "Full Stack Developer", 
-    score: 87,
-    skills: ["React", "Node.js", "MongoDB"],
-    experience: "6+ years",
-    avatar: "BW"
-  },
-];
-
-const chatMessages = [
-  { id: 1, sender: "bot", message: "Hello! I'm here to help you learn more about your candidates. Ask me anything about their profiles, skills, or experience!" },
-  { id: 2, sender: "user", message: "Tell me about John Doe's experience" },
-  { id: 3, sender: "bot", message: "John Doe is a Frontend Developer with 5+ years of experience. He specializes in React, TypeScript, and Next.js with a score of 95/100." },
-];
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { 
+  Mail, 
+  Linkedin, 
+  GraduationCap, 
+  Briefcase, 
+  Code2, 
+  Star,
+  Send,
+  Loader2
+} from 'lucide-react';
+import axios from 'axios';
 
 const ResultPage = () => {
-  const [selectedCandidate, setSelectedCandidate] = useState(candidates[0]);
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState(chatMessages);
-  const [searchTerm, setSearchTerm] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [candidates, setCandidates] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [chatMessage, setChatMessage] = useState('');
+  const [chatHistory, setChatHistory] = useState([]);
+  const [sendingMessage, setSendingMessage] = useState(false);
 
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      const newMessage = { id: messages.length + 1, sender: "user", message };
-      setMessages([...messages, newMessage]);
-      setMessage("");
-      
-      // Simulate bot response
-      setTimeout(() => {
-        const botResponse = { 
-          id: messages.length + 2, 
-          sender: "bot", 
-          message: "I understand you're asking about that. Let me analyze the candidate data for you..." 
-        };
-        setMessages(prev => [...prev, botResponse]);
-      }, 1000);
+  useEffect(() => {
+    const fetchResults = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/get_results');
+        setCandidates(response.data);
+      } catch (err) {
+        setError('Failed to fetch results. Please try again.');
+        console.error('Error fetching results:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchResults();
+  }, []);
+
+  const handleChatSubmit = async (e) => {
+    e.preventDefault();
+    if (!chatMessage.trim()) return;
+
+    const newMessage = {
+      type: 'user',
+      content: chatMessage
+    };
+
+    setChatHistory(prev => [...prev, newMessage]);
+    setChatMessage('');
+    setSendingMessage(true);
+
+    try {
+      const response = await axios.post('http://localhost:5000/chat', {
+        message: chatMessage
+      });
+
+      setChatHistory(prev => [...prev, {
+        type: 'assistant',
+        content: response.data.response
+      }]);
+    } catch (err) {
+      setChatHistory(prev => [...prev, {
+        type: 'error',
+        content: 'Failed to get response. Please try again.'
+      }]);
+    } finally {
+      setSendingMessage(false);
     }
   };
 
-  const filteredCandidates = candidates.filter(candidate =>
-    candidate.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    candidate.role.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-4" />
+          <p className="text-gray-600">Loading results...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">{error}</p>
+          <button
+            onClick={() => navigate('/upload')}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
-        <motion.div 
-          className="mb-8"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">Candidate Results</h1>
-          <p className="text-gray-600">AI-powered candidate analysis and ranking</p>
-        </motion.div>
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Analysis Results
+          </h1>
+          <p className="text-gray-600">
+            Found {candidates.length} matching candidates
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-200px)]">
-          {/* Left Section - Candidates List */}
-          <div className="lg:col-span-1">
-            <Card className="h-full shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-              <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <User className="w-5 h-5 text-blue-600" />
-                  Candidates ({filteredCandidates.length})
-                </CardTitle>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                  <Input
-                    placeholder="Search candidates..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-              </CardHeader>
-              <CardContent className="overflow-y-auto max-h-[calc(100%-120px)]">
-                <div className="space-y-3">
-                  {filteredCandidates.map((candidate, index) => (
-                    <motion.div
-                      key={candidate.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      whileHover={{ scale: 1.02 }}
-                      className={`p-4 rounded-xl cursor-pointer transition-all duration-200 ${
-                        selectedCandidate.id === candidate.id
-                          ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg'
-                          : 'bg-gray-50 hover:bg-gray-100 border border-gray-200'
-                      }`}
-                      onClick={() => setSelectedCandidate(candidate)}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg ${
-                          selectedCandidate.id === candidate.id
-                            ? 'bg-white/20 text-white'
-                            : 'bg-blue-100 text-blue-600'
-                        }`}>
-                          {candidate.avatar}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold truncate">{candidate.name}</h3>
-                          <p className={`text-sm truncate ${
-                            selectedCandidate.id === candidate.id ? 'text-blue-100' : 'text-gray-600'
-                          }`}>
-                            {candidate.role}
-                          </p>
-                          <div className="flex items-center gap-2 mt-1">
-                            <Star className="w-4 h-4 fill-current text-yellow-400" />
-                            <span className="text-sm font-medium">{candidate.score}%</span>
-                          </div>
-                        </div>
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Candidates List */}
+          <div className="lg:col-span-2 space-y-6">
+            {candidates.map((candidate, index) => (
+              <div
+                key={candidate._id}
+                className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden"
+              >
+                <div className="p-6">
+                  {/* Header with Rank */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h2 className="text-xl font-semibold text-gray-900">
+                        {candidate.name}
+                      </h2>
+                      <div className="flex items-center gap-2 mt-1">
+                        <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                        <span className="text-sm text-gray-600">
+                          Rank #{candidate.rank} (Score: {candidate.score}%)
+                        </span>
                       </div>
-                    </motion.div>
-                  ))}
+                    </div>
+                  </div>
+
+                  {/* Contact Info */}
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <a
+                      href={`mailto:${candidate.mail}`}
+                      className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600"
+                    >
+                      <Mail className="w-4 h-4" />
+                      {candidate.mail}
+                    </a>
+                    <a
+                      href={`https://${candidate.linkedin}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600"
+                    >
+                      <Linkedin className="w-4 h-4" />
+                      LinkedIn Profile
+                    </a>
+                  </div>
+
+                  {/* Education */}
+                  <div className="mb-4">
+                    <h3 className="flex items-center gap-2 text-sm font-medium text-gray-900 mb-2">
+                      <GraduationCap className="w-4 h-4" />
+                      Education
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {candidate.education}
+                    </p>
+                  </div>
+
+                  {/* Work Experience */}
+                  <div className="mb-4">
+                    <h3 className="flex items-center gap-2 text-sm font-medium text-gray-900 mb-2">
+                      <Briefcase className="w-4 h-4" />
+                      Work Experience
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {candidate.work_experience}
+                    </p>
+                  </div>
+
+                  {/* Skills */}
+                  <div>
+                    <h3 className="flex items-center gap-2 text-sm font-medium text-gray-900 mb-2">
+                      <Code2 className="w-4 h-4" />
+                      Skills
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {candidate.skills.map((skill, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            ))}
           </div>
 
-          {/* Middle Section - Candidate Details */}
+          {/* AI Chatbot Section */}
           <div className="lg:col-span-1">
-            <Card className="h-full shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <Briefcase className="w-5 h-5 text-blue-600" />
-                  Candidate Profile
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <motion.div
-                  key={selectedCandidate.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="text-center"
-                >
-                  <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-4">
-                    {selectedCandidate.avatar}
-                  </div>
-                  <h2 className="text-2xl font-bold text-gray-800 mb-2">{selectedCandidate.name}</h2>
-                  <p className="text-gray-600 text-lg mb-4">{selectedCandidate.role}</p>
-                  
-                  <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-4 mb-6">
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                      <Star className="w-5 h-5 fill-current text-yellow-500" />
-                      <span className="text-2xl font-bold text-gray-800">{selectedCandidate.score}%</span>
-                    </div>
-                    <p className="text-sm text-gray-600">Match Score</p>
-                  </div>
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden h-[calc(100vh-8rem)] flex flex-col">
+              <div className="p-4 border-b border-gray-100">
+                <h3 className="font-semibold text-gray-900">AI Assistant</h3>
+                <p className="text-sm text-gray-600">Ask questions about the candidates</p>
+              </div>
 
-                  <div className="text-left space-y-4">
-                    <div>
-                      <h3 className="font-semibold text-gray-800 mb-2">Experience</h3>
-                      <p className="text-gray-600 bg-gray-50 rounded-lg p-3">{selectedCandidate.experience}</p>
-                    </div>
-
-                    <div>
-                      <h3 className="font-semibold text-gray-800 mb-2">Key Skills</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedCandidate.skills.map((skill, index) => (
-                          <motion.span
-                            key={skill}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: index * 0.1 }}
-                            className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium"
-                          >
-                            {skill}
-                          </motion.span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Right Section - AI Chatbot */}
-          <div className="lg:col-span-1">
-            <Card className="h-full shadow-lg border-0 bg-white/80 backdrop-blur-sm flex flex-col">
-              <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <MessageCircle className="w-5 h-5 text-blue-600" />
-                  AI Assistant
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex-1 flex flex-col">
-                <div className="flex-1 overflow-y-auto space-y-4 mb-4 max-h-[calc(100%-80px)]">
-                  {messages.map((msg, index) => (
-                    <motion.div
-                      key={msg.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <div className={`max-w-[80%] p-3 rounded-lg ${
-                        msg.sender === 'user'
-                          ? 'bg-blue-500 text-white rounded-br-none'
-                          : 'bg-gray-100 text-gray-800 rounded-bl-none'
-                      }`}>
-                        <p className="text-sm">{msg.message}</p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-                
-                <div className="flex gap-2 mt-auto">
-                  <Input
-                    placeholder="Ask about candidates..."
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                    className="flex-1"
-                  />
-                  <Button 
-                    onClick={handleSendMessage}
-                    disabled={!message.trim()}
-                    className="bg-blue-600 hover:bg-blue-700"
+              {/* Chat Messages */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                {chatHistory.map((message, index) => (
+                  <div
+                    key={index}
+                    className={`flex ${
+                      message.type === 'user' ? 'justify-end' : 'justify-start'
+                    }`}
                   >
-                    <Send className="w-4 h-4" />
-                  </Button>
+                    <div
+                      className={`max-w-[80%] rounded-lg p-3 ${
+                        message.type === 'user'
+                          ? 'bg-blue-600 text-white'
+                          : message.type === 'error'
+                          ? 'bg-red-50 text-red-600'
+                          : 'bg-gray-100 text-gray-900'
+                      }`}
+                    >
+                      <p className="text-sm">{message.content}</p>
+                    </div>
+                  </div>
+                ))}
+                {sendingMessage && (
+                  <div className="flex justify-start">
+                    <div className="bg-gray-100 rounded-lg p-3">
+                      <Loader2 className="w-4 h-4 animate-spin text-gray-600" />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Chat Input */}
+              <form onSubmit={handleChatSubmit} className="p-4 border-t border-gray-100">
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={chatMessage}
+                    onChange={(e) => setChatMessage(e.target.value)}
+                    placeholder="Ask about the candidates..."
+                    className="flex-1 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                  <button
+                    type="submit"
+                    disabled={sendingMessage || !chatMessage.trim()}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Send className="w-5 h-5" />
+                  </button>
                 </div>
-              </CardContent>
-            </Card>
+              </form>
+            </div>
           </div>
         </div>
       </div>
