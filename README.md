@@ -1,6 +1,6 @@
 # Buildathon - Radons
 
-* **Deployed Application**: [Link](#)
+* **Deployed Application**: [Link](https://hireai-radons.vercel.app/)
 * **Demo Video**: [Link](#)
   
 ## Overview
