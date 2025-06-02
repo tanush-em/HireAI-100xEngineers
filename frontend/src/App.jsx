@@ -13,12 +13,12 @@ function App() {
     <Router>
       <div className="min-h-screen bg-gray-100">
         <Navbar />
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto w-screen bg-gray-100">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/dashboard" element={<ResumeDashboard />} />
             <Route path="/loading" element={<TransitionLoading />} />
-            <Route path="/result" element={<ResultPage />} />
+            <Route path="/results" element={<ResultPage />} />
             <Route path="/upload" element={<UploadResume />} />
             <Route path="/candidates" element={<CandidateList />} />
             <Route path="/candidates/:filename" element={<CandidateDetail />} />

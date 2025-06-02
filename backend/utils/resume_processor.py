@@ -1,4 +1,4 @@
-from utils.pdf_processor import extract_text_from_pdf
+from utils.helpers import extract_text_from_pdf
 from utils.db import get_mongo_collection
 from llm.groq import llm, extraction_prompt, ranking_prompt, JOB_DESCRIPTION
 

@@ -2,6 +2,7 @@ import os
 import fitz
 from langchain_core.prompts import PromptTemplate
 from llm.groq import initialize_llm 
+from langchain.chains import RetrievalQA
 
 def read_prompt_file(filename):
     with open(os.path.join("prompts", filename), "r", encoding="utf-8") as f:
@@ -62,3 +63,8 @@ def rank_candidates(candidates_info):
     with open(os.path.join("output", "candidate_ranking.txt"), "w", encoding="utf-8") as f:
         f.write(cleaned_output)
     return cleaned_output
+
+def from_chain(vectorstore):
+    return RetrievalQA.from_chain_type(llm=llm, retriever=vectorstore.as_retriever())
+
+
