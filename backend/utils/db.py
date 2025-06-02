@@ -11,8 +11,7 @@ def get_mongo_collection():
     db = client[db_name]
     return db["candidates"]
 
-# Append ranks and upload to MongoDB
-def append_ranks_to_candidates(candidates_info, rankings_text,session_id):
+def append_ranks_to_candidates(candidates_info, rankings_text, session_id):
     ranking_blocks = rankings_text.strip().split("\n\n")
     name_to_score = {}
 
@@ -42,7 +41,7 @@ def append_ranks_to_candidates(candidates_info, rankings_text,session_id):
             "skills": [],
             "rank": idx,
             "score": 0,
-            "session_id":session_id
+            "session_id": session_id
         }
 
         for line in lines:
@@ -70,18 +69,27 @@ def append_ranks_to_candidates(candidates_info, rankings_text,session_id):
             f.write(f"score: {data_dict['score']}\n")
             f.write("---\n")
 
-        # Check if email already exists and update only score and rank if it does
+        # Insert or update candidate info in MongoDB
         if data_dict["mail"]:
             existing_candidate = collection.find_one({"mail": data_dict["mail"]})
             if existing_candidate:
+                # 🟢 Update score, rank, and session_id
                 collection.update_one(
                     {"mail": data_dict["mail"]},
-                    {"$set": {"score": data_dict["score"], "rank": idx}}
+                    {
+                        "$set": {
+                            "score": data_dict["score"],
+                            "rank": idx,
+                            "session_id": session_id  # ✅ update session_id too
+                        }
+                    }
                 )
             else:
                 collection.insert_one(data_dict)
         else:
             collection.insert_one(data_dict)
+
         pprint(data_dict)
+
 
 

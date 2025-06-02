@@ -1,70 +1,97 @@
-Name: TANUSH T M
-Score: 82
+Name: RAKHESH KRISHNA P
+Score: 60
 
-Job Description:
-We are looking for a Software Engineer with the following requirements:
+Mail: rakheshkrishnap@gmail.com
+LinkedIn ID: linkedin.com/in/rakhesh-krishna-p
 
-- Strong programming skills in Python, JavaScript, and React
-- Experience with web development frameworks
-- Knowledge of database systems (SQL and NoSQL)
-- Understanding of software design patterns and best practices
-- Experience with version control systems (Git)
-- Good problem-solving and analytical skills
-- Strong communication and teamwork abilities
-- Bachelor's degree in Computer Science or related field
-- 3+ years of professional experience
+Education:
+• SRM Easwari Engineering College - Chennai, India
+  2022 - 2026
+  Bachelor of Engineering, Computer Science and Engineering (AI & ML)
+  CGPA: 8.60
+• Velankanni Matriculation Higher Secondary School - Chennai, India
+  2007 - 2022
+  Stream: Mathematics and Computer Science.
+  Class 10: 94% Class 12: 90.33%
 
-The ideal candidate should be able to:
-- Design and implement scalable web applications
-- Write clean, maintainable, and well-documented code
-- Collaborate with cross-functional teams
-- Debug and optimize application performance
-- Stay up-to-date with emerging technologies
+Work Experience:
+• SRM Dental College
+  Chennai, India, March 2025 - April 2025
+  Research Intern
+  • Conducting data analysis to identify effective medicines for treating various cancer types.
+  • Gathering and analyzing data from research papers to evaluate tumor inhibition, multiplicity, and volume.
+• Trios Technologies Private Limited
+  Chennai, India, July 2024
+  Artificial Intelligence Intern — Tech Stack: Next.js. TypeScript, FastAPI, ShadCN UI
+  • Developed a Deep Learning model that analyzes 210 MRI scans per minute.
+  • Achieved 98.91% accuracy in dementia classification by custom-tuning ResNet-50 layers.
+• GirlScript Summer of Code
+  Remote, October 2024 - November 2024
+  Open-Source Contributor
+  • Developed a YOLOv8 model for real-time object counting and vehicle classification using CNNs.
+  • Developed a NLP model for sentiment analysis. Merged 8 pull requests in GSSoC open-source projects.
 
-Name: 
- 
+Skills: Python, C, Java, HTML, CSS, JavaScript, Node JS, Postgre SQL, Mongo DB, Express, Flask, PyTorch, TensorFlow, Keras, Next.js, React.js, NumPy, Pandas, Scikit-Learn, Matplotlib, Seaborn, OpenCV, NLTK, BeautifulSoup, Scrapy, Selenium, Visual Studio Code, GitHub, Jupyter, Colab, Postman, Command Prompt, Git Bash, Nvidia CUDA.
 
-Name: TANUSH T M
+Name: Spike O’Carroll
+Score: 85
 
-Mail: 
-tanushhtm.work@gmail.com
+Mail: career@spike.codes
+LinkedIn ID: linkedin.com/in/spike-ocarroll
 
-LinkedIn ID: 
-tanush-tm
+Education:
+University of California, Irvine
+- B.S., Computer Science
+- Expected Dec 2025
+- GPA: 3.95
 
-Education: 
-B.E in Computer Science Engineering (with specialization in AI and ML)
-SRM Easwari Engineering College, Chennai
-CGPA – 8.93
-Nov 2022 - present
+Work Experience:
+1. Full Stack Software Intern
+- Dec 2023 – Sep 2024
+- Portal AI
+- Remote
+- Shipped 80+ features to a venture-backed startup’s AI web browser and LLM interface serving 30,000 users/mo
+- Built a high-performance vector database in Rust with SQL query support and cloud syncing with Postgres server
+- Launched a conversational voice AI in Python with < 600ms latency, web agent capabilities, and RAG
+- Worked closely with fast-paced teams to develop Electron-based browser in Node, TypeScript, React, and Tailwind
+2. Freelance Web Developer
+- Nov 2021 – Dec 2023
+- Self-employed
+- Culver City, CA
+- Created high-converting websites for businesses and public figures using Webflow, Figma, and Framer
+- Organically increased web traffic by 2-3x for more than 90% of clients through maximizing SEO and page speed
+- Designed stunning landing pages and 0→1 web branding featured in 32 Behance and Dribbble collections
+3. Frontend and Webmaster Intern
+- Mar 2023 – Nov 2023
+- Maximize Athletic Performance
+- Los Angeles, CA
+- Designed and maintained website, Shopify store, and JotForm assessment form for private gym
+- Architected automation pipelines saving 10 hours/week on client processing using webhooks and Zapier
 
-Work Experience: 
-1. Freelance AI & Web Developer 
-   Kritam Creations, DataScon Solutions & other agencies | Sept 2024 – May 2025
-   - Worked as a Freelance AI and Web developer on 14 gigs for 10 clients over a span of 9 months.
-   - These gigs are predominantly focused on custom solutions and consulting related to AI, Full Stack Development and Data.
-   - Worked on a variety of freelance gigs such as Development of MVP and Software Products for Startups.
-   - End-to-end Website Development, AI Integration and Consulting, Custom Computer Vision Use cases, Landing Pages etc.  
-2. COMPUTER VISION INTERN
-   Infomaps, Chennai | June 2024 – Aug 2024
-   - Real-Time Traffic Analytics
-     - This is a project done for the Tamil Nadu State Police. This project focuses on extracting Traffic Analytical data in real time. 
-     - The project focuses on maintaining data of vehicle count by leveraging object classification, tracking and counting.
-     - The project classifies the vehicles on a variety of classes and maintains the count and other analytical data.
-   - Building Footprint Extraction 
-     - Focused on automating the workflow of processing raw satellite data and imagery to digitized maps.
-     - Utilized advanced computer vision techniques and deep learning frameworks to complete the entire project.
-     - The high level workflow is to extract building footprints, polygonize them and convert it into GIS compatible shape files.
-3. DATA SCIENCE INTERN
-   Exposys Data Labs | May 2024 – June 2024
-   - Focused on building a reliable and efficient Machine Learning model to a health condition. 
-   - Worked on Data Acquiring, Cleaning, Analysis, Preprocessing, Machine Learning Techniques.
-4. CHIEF TECHNICAL LEAD - ADEPTUS 
-   ADEPTUS - Technical Club, EEC | Oct 2024 – present
-   - My roles and responsibilities are aligned towards building websites and systems that could help the club manage content creation 
-   - I also build interactive solutions for the events, newsletters and blogs of the club.
+Skills: TypeScript, JavaScript, Python, C/C++, Java, Rust, HTML, CSS, SQL, C#, Go, React, NextJS, Node.js, Electron, Chakra UI, Tailwind CSS, Flask, Django, Docker, AWS, Git, Firebase, GitHub, CI/CD, Linux, Azure, Shell Scripts, WordPress, CMS, Open Source, DevOps, UI/UX, Quality Assurance, Machine Learning, Artificial Intelligence, NLP, Excel
 
-Skills: 
-Deep Learning, AI, Full Stack Development, Computer Vision, Data Science, LLMs, Agents & Machine Learning, Python, C, C++, Javascript, Java, Typescript, Lua, Julia, R, SQL, Agentic AI, Model Development & Optimization, LLM Wrappers, RAG Architectures, custom CV usecases & Tableau, NextJS, React, NodeJS, Django, FastAPI, Flask, ShadcnUI, Flowbite, AceternityUI, CRUD and APIs, System Design, OOPS, DBMS and SQL, OS and Computer Networks, Data Structures and Algorithms, Problem Solving, First Principle Thinking, Higher order Physics, English, Hindi, Tamil, Punjabi.
+Name: Navipriya S
+Score: 45
 
-The candidate has a strong background in AI and ML, and has experience with web development frameworks such as React, NodeJS, and Django. However, the candidate lacks experience with JavaScript, and the job description requires experience with both Python and JavaScript. The candidate also has experience with database systems, but the job description requires knowledge of both SQL and NoSQL. The candidate's skills in problem-solving and analytical skills are also not explicitly mentioned in the job description. Overall, the candidate's score is 82, indicating a good match but not a perfect one.
+Mail: navisenthilnadhan@gmail.com
+LinkedIn ID: www.linkedin.com/in/navipriyas
+
+Education:
+- Chennai Institute Of Technology | Bachelor of Engineering in Computer Science (2021 – 2025)
+  - Coursework: Operating System, DBMS, OOPS, Data Structures, Computer Networks.
+
+Work Experience:
+- Arwin Networks | Web Developer Intern (June 2023 – September 2023)
+  - Orchestrated the design of stuwoork.com skillfully utilizing React and responsive principles for seamless functionality
+  - Led comprehensive usability testing, achieving a 20% reduction in inquiries through a user-centric approach.
+  - Demonstrated effective design leadership, contributing to a notable 15% improvement in overall user satisfaction.
+- LiveWire | Web Developer Intern (May 2023 – October 2023)
+  - Directed 50% of the front-end development for the Django website, ensuring timely deliverables and outcomes.
+  - Attained faster database retrieval, boosting team productivity by 20% and enhancing access to 20+ courses.
+  - Centralized all course inquiry data, reducing duplicate entries and facilitating 20% faster data retrieval.
+- Placement 360 | Campus Ambassador (July 2023 – December 2023)
+  - Elevated Placement 360 visibility through consistently engaging communication strategies.
+  - Consistently surpassed task expectations, maintaining perfect 100% meeting attendance, and boosting participation.
+  - Gained favorable remarks from project management, contributing to a 15% increase in overall team morale.
+
+Skills: Java, Python, C, HTML/CSS, JavaScript, SQL, React.js, Node.js, Express.js, RESTful APIs, Git, GitHub, Docker, Django, React Native, Bootstrap, Tailwind CSS, jQuery, MySQL, MongoDB, PostgreSQL
