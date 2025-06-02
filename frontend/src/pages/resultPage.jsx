@@ -6,6 +6,7 @@ import { MessageCircle, User, Briefcase, Star, Send, Search } from "lucide-react
 import { Button } from "../components/button";
 import { Input } from "../components/input";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/card";
+import { API_BASE_URL } from '../config';
 
 const ResultPage = () => {
   const { sessionId } = useParams();
@@ -18,7 +19,7 @@ const ResultPage = () => {
 
   // === Load Candidates from Backend ===
   useEffect(() => {
-    axios.get(`http://127.0.0.1:5000/result/${state.session_id}`)
+    axios.get(`${API_BASE_URL}/result/${state.session_id}`)
       .then((res) => {
         const data = res.data;
         console.log("Raw data from backend:", data);
@@ -65,7 +66,7 @@ const ResultPage = () => {
     setMessage("");
 
     try {
-      const res = await axios.post(`http://127.0.0.1:5000/chat/${state.session_id}`, {
+      const res = await axios.post(`${API_BASE_URL}/chat/${state.session_id}`, {
         query: message,
       });
 

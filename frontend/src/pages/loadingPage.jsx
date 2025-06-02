@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle, Upload, Brain, FileText, Sparkles } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 const stages = [
   { 
@@ -40,46 +41,46 @@ const TransitionLoading = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-  const fetchStatus = async () => {
-    try {
-      const response = await fetch(`http://127.0.0.1:5000/status/${state.session_id}`);
-      const data = await response.json();
+    const fetchStatus = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/status/${state.session_id}`);
+        const data = await response.json();
 
-      const stage = parseInt(data.status);
+        const stage = parseInt(data.status);
 
-      if (!isNaN(stage) && stage < stages.length) {
-        const current = stages[stage];
-        setProgress(current.progress);
-        setMessage(current.message);
-        setDescription(current.description);
-        setCurrentStage(stage);
+        if (!isNaN(stage) && stage < stages.length) {
+          const current = stages[stage];
+          setProgress(current.progress);
+          setMessage(current.message);
+          setDescription(current.description);
+          setCurrentStage(stage);
 
-        if (stage > 0) {
-          setCompletedStages(prev => {
-            const updated = new Set(prev);
-            for (let i = 0; i < stage; i++) updated.add(i);
-            return [...updated];
-          });
+          if (stage > 0) {
+            setCompletedStages(prev => {
+              const updated = new Set(prev);
+              for (let i = 0; i < stage; i++) updated.add(i);
+              return [...updated];
+            });
+          }
+
+          if (stage === stages.length - 1) {
+            setCompletedStages(prev => [...new Set([...prev, stage])]);
+            setTimeout(() => {
+              navigate("/results", { state: { session_id: state.session_id } });
+            }, 1500);
+          }
         }
 
-        if (stage === stages.length - 1) {
-          setCompletedStages(prev => [...new Set([...prev, stage])]);
-          setTimeout(() => {
-            navigate("/results", { state: { session_id: state.session_id } });
-          }, 1500);
-        }
+      } catch (error) {
+        console.error("Error fetching status:", error);
       }
+    };
 
-    } catch (error) {
-      console.error("Error fetching status:", error);
-    }
-  };
+    const interval = setInterval(fetchStatus, 2000);
+    fetchStatus();
 
-  const interval = setInterval(fetchStatus, 2000);
-  fetchStatus();
-
-  return () => clearInterval(interval);
-}, [navigate, state.session_id]);
+    return () => clearInterval(interval);
+  }, [navigate, state.session_id]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex flex-col items-center justify-center px-4 relative overflow-hidden">
