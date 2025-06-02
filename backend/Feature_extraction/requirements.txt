@@ -1,6 +1,0 @@
-pymongo
-python-dotenv
-PyMuPDF
-langchain
-langchain-core
-langchain-groq

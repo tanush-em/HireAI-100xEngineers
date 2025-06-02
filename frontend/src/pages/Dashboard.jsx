@@ -44,7 +44,7 @@ const ResumeDashboard = () => {
   const fetchCandidates = async () => {
     try {
       setLoading(true)
-      const response = await fetch("http://127.0.0.1:5000/api/candidates")
+      const response = await fetch("http://127.0.0.1:5000/candidates")
       const result = await response.json()
 
       if (result.success) {

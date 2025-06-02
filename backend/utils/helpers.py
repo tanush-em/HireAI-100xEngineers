@@ -65,4 +65,6 @@ def rank_candidates(candidates_info):
     return cleaned_output
 
 def from_chain(vectorstore):
-    return RetrievalQA.from_chain_type(llm=llm, retriever=vectorstore.as_retriever()) 
+    return RetrievalQA.from_chain_type(llm=llm, retriever=vectorstore.as_retriever())
+
+
