@@ -1,5 +1,3 @@
-"use client"
-
 import React from "react"
 import { useState, useEffect } from "react"
 import {
@@ -21,11 +19,11 @@ import {
   RefreshCw,
 } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
-import { Button } from "../components/ui/button"
-import { Input } from "../components/ui/input"
-import { Badge } from "../components/ui/badge"
-import { Separator } from "../components/ui/separator"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../components/ui/chart"
+import { Button } from "../components/button"
+import { Input } from "../components/input"
+import { Badge } from "../components/badge"
+import { Separator } from "../components/separator"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../components/chart"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell } from "recharts"
 
 const ResumeDashboard = () => {
@@ -46,7 +44,7 @@ const ResumeDashboard = () => {
   const fetchCandidates = async () => {
     try {
       setLoading(true)
-      const response = await fetch("/api/candidates")
+      const response = await fetch("http://127.0.0.1:5000/api/candidates")
       const result = await response.json()
 
       if (result.success) {

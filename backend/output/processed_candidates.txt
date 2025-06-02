@@ -1,0 +1,379 @@
+File name: Rohit P Resume 2025.pdf
+Name: 
+Rohit P
+
+Mail: 
+310622243041@eec.srmrmp.edu.in
+
+LinkedIn ID: 
+Github:RohitP2005
+
+Education: 
+- B.Tech in AIADS, Easwari Engineering College, Chennai, Expected 2026, CGPA: 8.33
+- HSSC, SBIOA Senior Secondary School, Trichy, 2022, Percentage: 93.2%
+- SSLC, SBIOA Senior Secondary School, Trichy, 2020, Percentage: 91.6%
+- Web Design - Bharathidasan University, 2018, First Class with Exemplary
+- C Programming - Bharathidasan University, 2019, First Class with Exemplary
+
+Work Experience: 
+- No work experience mentioned in the resume.
+
+Skills: 
+Artificial Intelligence & Machine Learning, Core Libraries: TensorFlow, PyTorch, Scikit-Learn, Open-CV, NLP: Regex, BERT, LangChain, Hugging Face models, GPT-3, Gemini, LLaMA-3, Cohere, Generative AI: GANs, Autoencoders, Transformers, Yolo, Full-Stack Web Development, Frontend: HTML, CSS, JavaScript, TypeScript, React, Vite, Next.js, Angular (Basics), Bootstrap, Tailwind CSS, Backend: Node.js, Express, EJS, Handlebars, Python (Flask, FastAPI), Databases: NoSQL: MongoDB, Firebase, SQL: PostgreSQL, NeonDB, MySQL, Android Development: Reac-Native(Expo), Java(Android Studio), Programming Languages: Scala, C, R, Rust (Basics), Java, C++, Deployment & Cloud: Streamlit, AWS(EC2), Vercel, Netlify, Hostinger, Tools & Environments: Git, Linux (Arch, Ubuntu, Mint, Kali, Garuda), Neovim, Shell Scripting, Anaconda.
+rank: 1
+score: 0
+---
+File name: Rohit P Resume 2025.pdf
+Name: 
+Rohit P
+
+Mail: 
+310622243041@eec.srmrmp.edu.in
+
+LinkedIn ID: 
+Github:RohitP2005
+
+Education: 
+- B.Tech in AIADS, Easwari Engineering College, Chennai (Expected 2026, CGPA: 8.33)
+- HSSC, SBIOA Senior Secondary School, Trichy (2022, Percentage: 93.2%)
+- SSLC, SBIOA Senior Secondary School, Trichy (2020, Percentage: 91.6%)
+- Certificates:
+  - Web Design - Bharathidasan University (2018, First Class with Exemplary)
+  - C Programming - Bharathidasan University (2019, First Class with Exemplary)
+
+Work Experience: 
+(No work experience information available)
+
+Skills: 
+Artificial Intelligence & Machine Learning: Core Libraries: TensorFlow, PyTorch, Scikit-Learn, Open-CV, NLP: Regex, BERT, LangChain, Hugging Face models, GPT-3, Gemini, LLaMA-3, Cohere, Generative AI: GANs, Autoencoders, Transformers, Yolo.
+Full-Stack Web Development: Frontend: HTML, CSS, JavaScript, TypeScript, React, Vite, Next.js, Angular (Basics), Bootstrap, Tailwind CSS, Backend: Node.js, Express, EJS, Handlebars, Python (Flask, FastAPI).
+Databases: NoSQL: MongoDB, Firebase, SQL: PostgreSQL, NeonDB, MySQL.
+Android Development: Reac-Native(Expo), Java(Android Studio).
+Programming Languages: Scala, C, R, Rust (Basics), Java, C++.
+Currently Learning: Julia, Mojo, SpringBoot.
+IoT Development: Arduino IDE, Arduino (UNO, Nano, Mega), Raspberry Pi, ESP32, Jetson Nano.
+Deployment & Cloud: Streamlit, AWS(EC2), Vercel, Netlify, Hostinger.
+Tools & Environments: Git, Linux (Arch, Ubuntu, Mint, Kali, Garuda), Neovim, Shell Scripting, Anaconda.
+rank: 1
+score: 0
+---
+File name: Rohit P Resume 2025.pdf
+Name: 
+Rohit P
+
+Mail: 
+310622243041@eec.srmrmp.edu.in
+
+LinkedIn ID: 
+Github:RohitP2005
+
+Education: 
+- B.Tech in AIADS, Easwari Engineering College, Chennai (Expected 2026, CGPA: 8.33)
+- HSSC, SBIOA Senior Secondary School, Trichy (2022, Percentage: 93.2%)
+- SSLC, SBIOA Senior Secondary School, Trichy (2020, Percentage: 91.6%)
+- Certificates:
+  - Web Design - Bharathidasan University (2018, First Class with Exemplary)
+  - C Programming - Bharathidasan University (2019, First Class with Exemplary)
+
+Work Experience: 
+(No work experience information available)
+
+Skills: 
+Artificial Intelligence & Machine Learning, Core Libraries: TensorFlow, PyTorch, Scikit-Learn, Open-CV, NLP: Regex, BERT, LangChain, Hugging Face models, GPT-3, Gemini, LLaMA-3, Cohere, Generative AI: GANs, Autoencoders, Transformers, Yolo, Full-Stack Web Development, Frontend: HTML, CSS, JavaScript, TypeScript, React, Vite, Next.js, Angular (Basics), Bootstrap, Tailwind CSS, Backend: Node.js, Express, EJS, Handlebars, Python (Flask, FastAPI), Databases: NoSQL: MongoDB, Firebase, SQL: PostgreSQL, NeonDB, MySQL, Android Development: Reac-Native(Expo), Java(Android Studio), Programming Languages: Scala, C, R, Rust (Basics), Java, C++, Deployment & Cloud: Streamlit, AWS(EC2), Vercel, Netlify, Hostinger, Tools & Environments: Git, Linux (Arch, Ubuntu, Mint, Kali, Garuda), Neovim, Shell Scripting, Anaconda.
+rank: 1
+score: 0
+---
+File name: Rohit P Resume 2025.pdf
+Name: Rohit P
+
+Mail: 310622243041@eec.srmrmp.edu.in
+
+LinkedIn ID: Not available
+
+Education:
+- B.Tech in AIADS, Easwari Engineering College
+  - Expected 2026
+  - CGPA: 8.33
+- HSSC, SBIOA Senior Secondary School
+  - 2022
+  - Percentage: 93.2%
+- SSLC, SBIOA Senior Secondary School
+  - 2020
+  - Percentage: 91.6%
+- Certificates:
+  - Web Design - Bharathidasan University | 2018 | First Class with Exemplary
+  - C Programming - Bharathidasan University | 2019 | First Class with Exemplary
+
+Work Experience: Not available
+
+Skills: 
+TensorFlow, PyTorch, Scikit-Learn, Open-CV, Regex, BERT, LangChain, Hugging Face models, GPT-3, Gemini, LLaMA-3, Cohere, GANs, Autoencoders, Transformers, Yolo, HTML, CSS, JavaScript, TypeScript, React, Vite, Next.js, Angular, Bootstrap, Tailwind CSS, Node.js, Express, EJS, Handlebars, Python, Flask, FastAPI, MongoDB, Firebase, PostgreSQL, NeonDB, MySQL, Reac-Native, Java, Scala, C, R, Rust, Julia, Mojo, SpringBoot, Arduino IDE, Arduino, Raspberry Pi, ESP32, Jetson Nano, Streamlit, AWS, Vercel, Netlify, Hostinger, Git, Linux, Neovim, Shell Scripting, Anaconda
+rank: 1
+score: 40
+---
+File name: Rohit P Resume 2025.pdf
+Name: 
+Rohit P
+
+Mail: 
+310622243041@eec.srmrmp.edu.in
+
+LinkedIn ID: 
+Github:RohitP2005
+
+Education: 
+- B.Tech in AIADS, Easwari Engineering College, Chennai (Expected 2026, CGPA: 8.33)
+- HSSC, SBIOA Senior Secondary School, Trichy (2022, Percentage: 93.2%)
+- SSLC, SBIOA Senior Secondary School, Trichy (2020, Percentage: 91.6%)
+- Certificates:
+  - Web Design - Bharathidasan University (2018, First Class with Exemplary)
+  - C Programming - Bharathidasan University (2019, First Class with Exemplary)
+
+Work Experience: 
+(No work experience information available)
+
+Skills: 
+Artificial Intelligence & Machine Learning, Core Libraries: TensorFlow, PyTorch, Scikit-Learn, Open-CV, NLP: Regex, BERT, LangChain, Hugging Face models, GPT-3, Gemini, LLaMA-3, Cohere, Generative AI: GANs, Autoencoders, Transformers, Yolo, Full-Stack Web Development, Frontend: HTML, CSS, JavaScript, TypeScript, React, Vite, Next.js, Angular (Basics), Bootstrap, Tailwind CSS, Backend: Node.js, Express, EJS, Handlebars, Python (Flask, FastAPI), Databases: NoSQL: MongoDB, Firebase, SQL: PostgreSQL, NeonDB, MySQL, Android Development: Reac-Native(Expo), Java(Android Studio), Programming Languages: Scala, C, R, Rust (Basics), Java, C++, Currently Learning: Julia, Mojo, SpringBoot, IoT Development: Arduino IDE, Arduino (UNO, Nano, Mega), Raspberry Pi, ESP32, Jetson Nano, Deployment & Cloud: Streamlit, AWS(EC2), Vercel, Netlify, Hostinger, Tools & Environments: Git, Linux (Arch, Ubuntu, Mint, Kali, Garuda), Neovim, Shell Scripting, Anaconda.
+rank: 1
+score: 0
+---
+File name: Rohit P Resume 2025.pdf
+Name: 
+Rohit P
+
+Mail: 
+310622243041@eec.srmrmp.edu.in
+
+LinkedIn ID: 
+Github:RohitP2005
+
+Education: 
+- B.Tech in AIADS, Easwari Engineering College, Chennai (Expected 2026, CGPA: 8.33)
+- HSSC, SBIOA Senior Secondary School, Trichy (2022, Percentage: 93.2%)
+- SSLC, SBIOA Senior Secondary School, Trichy (2020, Percentage: 91.6%)
+- Web Design - Bharathidasan University (2018, First Class with Exemplary)
+- C Programming - Bharathidasan University (2019, First Class with Exemplary)
+
+Work Experience: 
+(No work experience information available)
+
+Skills: 
+Artificial Intelligence & Machine Learning, Core Libraries: TensorFlow, PyTorch, Scikit-Learn, Open-CV, NLP: Regex, BERT, LangChain, Hugging Face models, GPT-3, Gemini, LLaMA-3, Cohere, Generative AI: GANs, Autoencoders, Transformers, Yolo, Full-Stack Web Development, Frontend: HTML, CSS, JavaScript, TypeScript, React, Vite, Next.js, Angular (Basics), Bootstrap, Tailwind CSS, Backend: Node.js, Express, EJS, Handlebars, Python (Flask, FastAPI), Databases: NoSQL: MongoDB, Firebase, SQL: PostgreSQL, NeonDB, MySQL, Android Development: Reac-Native(Expo), Java(Android Studio), Programming Languages: Scala, C, R, Rust (Basics), Java, C++, Deployment & Cloud: Streamlit, AWS(EC2), Vercel, Netlify, Hostinger, Tools & Environments: Git, Linux (Arch, Ubuntu, Mint, Kali, Garuda), Neovim, Shell Scripting, Anaconda.
+rank: 1
+score: 0
+---
+File name: Rohit P Resume 2025.pdf
+Name: Rohit P
+
+Mail: 310622243041@eec.srmrmp.edu.in
+
+LinkedIn ID: Not available
+
+Education:
+- B.Tech in AIADS, Easwari Engineering College
+  - Expected 2026
+  - CGPA: 8.33
+- HSSC, SBIOA Senior Secondary School
+  - 2022
+  - Percentage: 93.2%
+- SSLC, SBIOA Senior Secondary School
+  - 2020
+  - Percentage: 91.6%
+- Certificates:
+  - Web Design - Bharathidasan University | 2018 | First Class with Exemplary
+  - C Programming - Bharathidasan University | 2019 | First Class with Exemplary
+
+Work Experience: Not available
+
+Skills: 
+TensorFlow, PyTorch, Scikit-Learn, Open-CV, Regex, BERT, LangChain, Hugging Face models, GPT-3, Gemini, LLaMA-3, Cohere, GANs, Autoencoders, Transformers, Yolo, HTML, CSS, JavaScript, TypeScript, React, Vite, Next.js, Angular, Bootstrap, Tailwind CSS, Node.js, Express, EJS, Handlebars, Python, Flask, FastAPI, MongoDB, Firebase, PostgreSQL, NeonDB, MySQL, Reac-Native, Java, Scala, C, R, Rust, Julia, Mojo, SpringBoot, Arduino IDE, Arduino, Raspberry Pi, ESP32, Jetson Nano, Streamlit, AWS, Vercel, Netlify, Hostinger, Git, Linux, Neovim, Shell Scripting, Anaconda
+rank: 1
+score: 20
+---
+File name: Rohit P Resume 2025.pdf
+Name: 
+Rohit P
+
+Mail: 
+310622243041@eec.srmrmp.edu.in
+
+LinkedIn ID: 
+Github:RohitP2005
+
+Education: 
+- B.Tech in AIADS, Easwari Engineering College, Chennai (Expected 2026, CGPA: 8.33)
+- HSSC, SBIOA Senior Secondary School, Trichy (2022, Percentage: 93.2%)
+- SSLC, SBIOA Senior Secondary School, Trichy (2020, Percentage: 91.6%)
+- Certificates:
+  - Web Design - Bharathidasan University (2018, First Class with Exemplary)
+  - C Programming - Bharathidasan University (2019, First Class with Exemplary)
+
+Work Experience: 
+(No work experience information available)
+
+Skills: 
+Artificial Intelligence & Machine Learning: Core Libraries: TensorFlow, PyTorch, Scikit-Learn, Open-CV, NLP: Regex, BERT, LangChain, Hugging Face models, GPT-3, Gemini, LLaMA-3, Cohere, Generative AI: GANs, Autoencoders, Transformers, Yolo.
+Full-Stack Web Development: Frontend: HTML, CSS, JavaScript, TypeScript, React, Vite, Next.js, Angular (Basics), Bootstrap, Tailwind CSS, Backend: Node.js, Express, EJS, Handlebars, Python (Flask, FastAPI).
+Databases: NoSQL: MongoDB, Firebase, SQL: PostgreSQL, NeonDB, MySQL.
+Android Development: Reac-Native(Expo), Java(Android Studio).
+Programming Languages: Scala, C, R, Rust (Basics), Java, C++.
+Currently Learning: Julia, Mojo, SpringBoot.
+IoT Development: Arduino IDE, Arduino (UNO, Nano, Mega), Raspberry Pi, ESP32, Jetson Nano.
+Deployment & Cloud: Streamlit, AWS(EC2), Vercel, Netlify, Hostinger.
+Tools & Environments: Git, Linux (Arch, Ubuntu, Mint, Kali, Garuda), Neovim, Shell Scripting, Anaconda.
+rank: 1
+score: 0
+---
+File name: Rohit P Resume 2025.pdf
+Name: 
+Rohit P
+
+Mail: 
+310622243041@eec.srmrmp.edu.in
+
+LinkedIn ID: 
+Github:RohitP2005
+
+Education: 
+- B.Tech in AIADS, Easwari Engineering College, Chennai (Expected 2026, CGPA: 8.33)
+- HSSC, SBIOA Senior Secondary School, Trichy (2022, Percentage: 93.2%)
+- SSLC, SBIOA Senior Secondary School, Trichy (2020, Percentage: 91.6%)
+- Web Design - Bharathidasan University (2018, First Class with Exemplary)
+- C Programming - Bharathidasan University (2019, First Class with Exemplary)
+
+Work Experience: 
+(No work experience information available)
+
+Skills: 
+Artificial Intelligence & Machine Learning, Core Libraries: TensorFlow, PyTorch, Scikit-Learn, Open-CV, NLP: Regex, BERT, LangChain, Hugging Face models, GPT-3, Gemini, LLaMA-3, Cohere, Generative AI: GANs, Autoencoders, Transformers, Yolo, Full-Stack Web Development, Frontend: HTML, CSS, JavaScript, TypeScript, React, Vite, Next.js, Angular (Basics), Bootstrap, Tailwind CSS, Backend: Node.js, Express, EJS, Handlebars, Python (Flask, FastAPI), Databases: NoSQL: MongoDB, Firebase, SQL: PostgreSQL, NeonDB, MySQL, Android Development: Reac-Native(Expo), Java(Android Studio), Programming Languages: Scala, C, R, Rust (Basics), Java, C++, Deployment & Cloud: Streamlit, AWS(EC2), Vercel, Netlify, Hostinger, Tools & Environments: Git, Linux (Arch, Ubuntu, Mint, Kali, Garuda), Neovim, Shell Scripting, Anaconda.
+rank: 1
+score: 0
+---
+File name: Rohit P Resume 2025.pdf
+Name: 
+Rohit P
+
+Mail: 
+310622243041@eec.srmrmp.edu.in
+
+LinkedIn ID: 
+Github:RohitP2005
+
+Education: 
+- B.Tech in AIADS, Easwari Engineering College, Chennai, Expected 2026, CGPA: 8.33
+- HSSC, SBIOA Senior Secondary School, Trichy, 2022, Percentage: 93.2%
+- SSLC, SBIOA Senior Secondary School, Trichy, 2020, Percentage: 91.6%
+- Web Design - Bharathidasan University, 2018, First Class with Exemplary
+- C Programming - Bharathidasan University, 2019, First Class with Exemplary
+
+Work Experience: 
+- No work experience mentioned in the resume.
+
+Skills: 
+Artificial Intelligence & Machine Learning, Core Libraries: TensorFlow, PyTorch, Scikit-Learn, Open-CV, NLP: Regex, BERT, LangChain, Hugging Face models, GPT-3, Gemini, LLaMA-3, Cohere, Generative AI: GANs, Autoencoders, Transformers, Yolo, Full-Stack Web Development, Frontend: HTML, CSS, JavaScript, TypeScript, React, Vite, Next.js, Angular (Basics), Bootstrap, Tailwind CSS, Backend: Node.js, Express, EJS, Handlebars, Python (Flask, FastAPI), Databases: NoSQL: MongoDB, Firebase, SQL: PostgreSQL, NeonDB, MySQL, Android Development: Reac-Native(Expo), Java(Android Studio), Programming Languages: Scala, C, R, Rust (Basics), Java, C++, Deployment & Cloud: Streamlit, AWS(EC2), Vercel, Netlify, Hostinger, Tools & Environments: Git, Linux (Arch, Ubuntu, Mint, Kali, Garuda), Neovim, Shell Scripting, Anaconda.
+rank: 1
+score: 0
+---
+File name: Rohit P Resume 2025.pdf
+Name: 
+Rohit P
+
+Mail: 
+310622243041@eec.srmrmp.edu.in
+
+LinkedIn ID: 
+Github:RohitP2005
+
+Education: 
+- B.Tech in AIADS, Easwari Engineering College, Chennai, Expected 2026, CGPA: 8.33
+- HSSC, SBIOA Senior Secondary School, Trichy, 2022, Percentage: 93.2%
+- SSLC, SBIOA Senior Secondary School, Trichy, 2020, Percentage: 91.6%
+- Web Design - Bharathidasan University, 2018, First Class with Exemplary
+- C Programming - Bharathidasan University, 2019, First Class with Exemplary
+
+Work Experience: 
+- No work experience mentioned in the resume.
+
+Skills: 
+Artificial Intelligence & Machine Learning, Core Libraries: TensorFlow, PyTorch, Scikit-Learn, Open-CV, NLP: Regex, BERT, LangChain, Hugging Face models, GPT-3, Gemini, LLaMA-3, Cohere, Generative AI: GANs, Autoencoders, Transformers, Yolo, Full-Stack Web Development, Frontend: HTML, CSS, JavaScript, TypeScript, React, Vite, Next.js, Angular (Basics), Bootstrap, Tailwind CSS, Backend: Node.js, Express, EJS, Handlebars, Python (Flask, FastAPI), Databases: NoSQL: MongoDB, Firebase, SQL: PostgreSQL, NeonDB, MySQL, Android Development: Reac-Native(Expo), Java(Android Studio), Programming Languages: Scala, C, R, Rust (Basics), Java, C++, Deployment & Cloud: Streamlit, AWS(EC2), Vercel, Netlify, Hostinger, Tools & Environments: Git, Linux (Arch, Ubuntu, Mint, Kali, Garuda), Neovim, Shell Scripting, Anaconda.
+rank: 1
+score: 0
+---
+File name: Rohit P Resume 2025.pdf
+Name: Rohit P
+
+Mail: 310622243041@eec.srmrmp.edu.in
+
+LinkedIn ID: Not available
+
+Education:
+- B.Tech in AIADS, Easwari Engineering College
+  - Expected 2026
+  - CGPA: 8.33
+- HSSC, SBIOA Senior Secondary School
+  - 2022
+  - Percentage: 93.2%
+- SSLC, SBIOA Senior Secondary School
+  - 2020
+  - Percentage: 91.6%
+- Certificates:
+  - Web Design - Bharathidasan University | 2018 | First Class with Exemplary
+  - C Programming - Bharathidasan University | 2019 | First Class with Exemplary
+
+Work Experience: Not available
+
+Skills: 
+TensorFlow, PyTorch, Scikit-Learn, Open-CV, Regex, BERT, LangChain, Hugging Face models, GPT-3, Gemini, LLaMA-3, Cohere, GANs, Autoencoders, Transformers, Yolo, HTML, CSS, JavaScript, TypeScript, React, Vite, Next.js, Angular, Bootstrap, Tailwind CSS, Node.js, Express, EJS, Handlebars, Python, Flask, FastAPI, MongoDB, Firebase, PostgreSQL, NeonDB, MySQL, Reac-Native, Java, Scala, C, R, Rust, Julia, Mojo, SpringBoot, Arduino IDE, Arduino, Raspberry Pi, ESP32, Jetson Nano, Streamlit, AWS, Vercel, Netlify, Hostinger, Git, Linux, Neovim, Shell Scripting, Anaconda
+rank: 1
+score: 40
+---
+File name: Rohit P Resume 2025.pdf
+Name: 
+Rohit P
+
+Mail: 
+310622243041@eec.srmrmp.edu.in
+
+LinkedIn ID: 
+Github:RohitP2005
+
+Education: 
+- B.Tech in AIADS, Easwari Engineering College, Chennai, Expected 2026, CGPA: 8.33
+- HSSC, SBIOA Senior Secondary School, Trichy, 2022, Percentage: 93.2%
+- SSLC, SBIOA Senior Secondary School, Trichy, 2020, Percentage: 91.6%
+- Web Design - Bharathidasan University, 2018, First Class with Exemplary
+- C Programming - Bharathidasan University, 2019, First Class with Exemplary
+
+Work Experience: 
+- No work experience mentioned in the resume.
+
+Skills: 
+Artificial Intelligence & Machine Learning, Core Libraries: TensorFlow, PyTorch, Scikit-Learn, Open-CV, NLP: Regex, BERT, LangChain, Hugging Face models, GPT-3, Gemini, LLaMA-3, Cohere, Generative AI: GANs, Autoencoders, Transformers, Yolo, Full-Stack Web Development, Frontend: HTML, CSS, JavaScript, TypeScript, React, Vite, Next.js, Angular (Basics), Bootstrap, Tailwind CSS, Backend: Node.js, Express, EJS, Handlebars, Python (Flask, FastAPI), Databases: NoSQL: MongoDB, Firebase, SQL: PostgreSQL, NeonDB, MySQL, Android Development: Reac-Native(Expo), Java(Android Studio), Programming Languages: Scala, C, R, Rust (Basics), Java, C++, Deployment & Cloud: Streamlit, AWS(EC2), Vercel, Netlify, Hostinger, Tools & Environments: Git, Linux (Arch, Ubuntu, Mint, Kali, Garuda), Neovim, Shell Scripting, Anaconda.
+rank: 1
+score: 0
+---
+File name: Rohit P Resume 2025.pdf
+Name: 
+Rohit P
+
+Mail: 
+310622243041@eec.srmrmp.edu.in
+
+LinkedIn ID: 
+Github:RohitP2005
+
+Education: 
+- B.Tech in AIADS, Easwari Engineering College, Chennai (Expected 2026, CGPA: 8.33)
+- HSSC, SBIOA Senior Secondary School, Trichy (2022, Percentage: 93.2%)
+- SSLC, SBIOA Senior Secondary School, Trichy (2020, Percentage: 91.6%)
+- Web Design - Bharathidasan University (2018, First Class with Exemplary)
+- C Programming - Bharathidasan University (2019, First Class with Exemplary)
+
+Work Experience: 
+(No work experience information available)
+
+Skills: 
+Artificial Intelligence & Machine Learning, Core Libraries: TensorFlow, PyTorch, Scikit-Learn, Open-CV, NLP: Regex, BERT, LangChain, Hugging Face models, GPT-3, Gemini, LLaMA-3, Cohere, Generative AI: GANs, Autoencoders, Transformers, Yolo, Full-Stack Web Development, Frontend: HTML, CSS, JavaScript, TypeScript, React, Vite, Next.js, Angular (Basics), Bootstrap, Tailwind CSS, Backend: Node.js, Express, EJS, Handlebars, Python (Flask, FastAPI), Databases: NoSQL: MongoDB, Firebase, SQL: PostgreSQL, NeonDB, MySQL, Android Development: Reac-Native(Expo), Java(Android Studio), Programming Languages: Scala, C, R, Rust (Basics), Java, C++, Deployment & Cloud: Streamlit, AWS(EC2), Vercel, Netlify, Hostinger, Tools & Environments: Git, Linux (Arch, Ubuntu, Mint, Kali, Garuda), Neovim, Shell Scripting, Anaconda.
+rank: 1
+score: 0
+---
