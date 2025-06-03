@@ -25,6 +25,7 @@ import { Badge } from "../components/badge"
 import { Separator } from "../components/separator"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../components/chart"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell } from "recharts"
+import { API_BASE_URL } from '../config';
 
 const ResumeDashboard = () => {
   const [candidates, setCandidates] = useState([])
@@ -44,7 +45,7 @@ const ResumeDashboard = () => {
   const fetchCandidates = async () => {
     try {
       setLoading(true)
-      const response = await fetch("http://127.0.0.1:5000/candidates")
+      const response = await fetch(`${API_BASE_URL}/candidates`)
       const result = await response.json()
 
       if (result.success) {

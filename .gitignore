@@ -36,9 +36,10 @@ __pycache__/
 .pytest_cache/
 .coverage
 htmlcov/
-.env/
+.env
 .env.local
 .env*.local
+venv/
 
 # ========================================
 # Node.js / React / Next.js
