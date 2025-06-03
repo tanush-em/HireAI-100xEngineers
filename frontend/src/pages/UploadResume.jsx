@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Upload, Search, FileText, Loader2, AlertCircle } from 'lucide-react';
 import JSZip from 'jszip';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
 
 const UploadResume = () => {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const UploadResume = () => {
       formData.append("query", query);
 
       // Send to Flask backend
-      const res = await axios.post("http://127.0.0.1:5000/analyze_resumes", formData, {
+      const res = await axios.post(`${API_BASE_URL}/analyze_resumes`, formData, {
         headers: { 
           "Content-Type": "multipart/form-data",
           "Accept": "application/json"
