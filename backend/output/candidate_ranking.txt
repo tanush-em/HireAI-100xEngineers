@@ -1,97 +1,10 @@
-Name: RAKHESH KRISHNA P
-Score: 60
-
-Mail: rakheshkrishnap@gmail.com
-LinkedIn ID: linkedin.com/in/rakhesh-krishna-p
-
-Education:
-• SRM Easwari Engineering College - Chennai, India
-  2022 - 2026
-  Bachelor of Engineering, Computer Science and Engineering (AI & ML)
-  CGPA: 8.60
-• Velankanni Matriculation Higher Secondary School - Chennai, India
-  2007 - 2022
-  Stream: Mathematics and Computer Science.
-  Class 10: 94% Class 12: 90.33%
-
-Work Experience:
-• SRM Dental College
-  Chennai, India, March 2025 - April 2025
-  Research Intern
-  • Conducting data analysis to identify effective medicines for treating various cancer types.
-  • Gathering and analyzing data from research papers to evaluate tumor inhibition, multiplicity, and volume.
-• Trios Technologies Private Limited
-  Chennai, India, July 2024
-  Artificial Intelligence Intern — Tech Stack: Next.js. TypeScript, FastAPI, ShadCN UI
-  • Developed a Deep Learning model that analyzes 210 MRI scans per minute.
-  • Achieved 98.91% accuracy in dementia classification by custom-tuning ResNet-50 layers.
-• GirlScript Summer of Code
-  Remote, October 2024 - November 2024
-  Open-Source Contributor
-  • Developed a YOLOv8 model for real-time object counting and vehicle classification using CNNs.
-  • Developed a NLP model for sentiment analysis. Merged 8 pull requests in GSSoC open-source projects.
-
-Skills: Python, C, Java, HTML, CSS, JavaScript, Node JS, Postgre SQL, Mongo DB, Express, Flask, PyTorch, TensorFlow, Keras, Next.js, React.js, NumPy, Pandas, Scikit-Learn, Matplotlib, Seaborn, OpenCV, NLTK, BeautifulSoup, Scrapy, Selenium, Visual Studio Code, GitHub, Jupyter, Colab, Postman, Command Prompt, Git Bash, Nvidia CUDA.
-
-Name: Spike O’Carroll
-Score: 85
-
-Mail: career@spike.codes
-LinkedIn ID: linkedin.com/in/spike-ocarroll
-
-Education:
-University of California, Irvine
-- B.S., Computer Science
-- Expected Dec 2025
-- GPA: 3.95
-
-Work Experience:
-1. Full Stack Software Intern
-- Dec 2023 – Sep 2024
-- Portal AI
-- Remote
-- Shipped 80+ features to a venture-backed startup’s AI web browser and LLM interface serving 30,000 users/mo
-- Built a high-performance vector database in Rust with SQL query support and cloud syncing with Postgres server
-- Launched a conversational voice AI in Python with < 600ms latency, web agent capabilities, and RAG
-- Worked closely with fast-paced teams to develop Electron-based browser in Node, TypeScript, React, and Tailwind
-2. Freelance Web Developer
-- Nov 2021 – Dec 2023
-- Self-employed
-- Culver City, CA
-- Created high-converting websites for businesses and public figures using Webflow, Figma, and Framer
-- Organically increased web traffic by 2-3x for more than 90% of clients through maximizing SEO and page speed
-- Designed stunning landing pages and 0→1 web branding featured in 32 Behance and Dribbble collections
-3. Frontend and Webmaster Intern
-- Mar 2023 – Nov 2023
-- Maximize Athletic Performance
-- Los Angeles, CA
-- Designed and maintained website, Shopify store, and JotForm assessment form for private gym
-- Architected automation pipelines saving 10 hours/week on client processing using webhooks and Zapier
-
-Skills: TypeScript, JavaScript, Python, C/C++, Java, Rust, HTML, CSS, SQL, C#, Go, React, NextJS, Node.js, Electron, Chakra UI, Tailwind CSS, Flask, Django, Docker, AWS, Git, Firebase, GitHub, CI/CD, Linux, Azure, Shell Scripts, WordPress, CMS, Open Source, DevOps, UI/UX, Quality Assurance, Machine Learning, Artificial Intelligence, NLP, Excel
-
 Name: Navipriya S
-Score: 45
+Score: 90
 
-Mail: navisenthilnadhan@gmail.com
-LinkedIn ID: www.linkedin.com/in/navipriyas
+Name: 
 
-Education:
-- Chennai Institute Of Technology | Bachelor of Engineering in Computer Science (2021 – 2025)
-  - Coursework: Operating System, DBMS, OOPS, Data Structures, Computer Networks.
+Name: 
+Score: 0
 
-Work Experience:
-- Arwin Networks | Web Developer Intern (June 2023 – September 2023)
-  - Orchestrated the design of stuwoork.com skillfully utilizing React and responsive principles for seamless functionality
-  - Led comprehensive usability testing, achieving a 20% reduction in inquiries through a user-centric approach.
-  - Demonstrated effective design leadership, contributing to a notable 15% improvement in overall user satisfaction.
-- LiveWire | Web Developer Intern (May 2023 – October 2023)
-  - Directed 50% of the front-end development for the Django website, ensuring timely deliverables and outcomes.
-  - Attained faster database retrieval, boosting team productivity by 20% and enhancing access to 20+ courses.
-  - Centralized all course inquiry data, reducing duplicate entries and facilitating 20% faster data retrieval.
-- Placement 360 | Campus Ambassador (July 2023 – December 2023)
-  - Elevated Placement 360 visibility through consistently engaging communication strategies.
-  - Consistently surpassed task expectations, maintaining perfect 100% meeting attendance, and boosting participation.
-  - Gained favorable remarks from project management, contributing to a 15% increase in overall team morale.
-
-Skills: Java, Python, C, HTML/CSS, JavaScript, SQL, React.js, Node.js, Express.js, RESTful APIs, Git, GitHub, Docker, Django, React Native, Bootstrap, Tailwind CSS, jQuery, MySQL, MongoDB, PostgreSQL
+Name: 
+Score: 0
