@@ -565,125 +565,127 @@ const ResumeDashboard = () => {
 
         {/* Candidate Detail Modal */}
         {selectedCandidate && (
-          <div className="fixed inset-0 bg-white overflow-y-auto h-full w-full z-50 p-4">
-            <div className="relative top-4 mx-auto max-w-2xl">
-              <Card className="border-0 shadow-2xl">
-                <CardHeader className="pb-4">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-xl">Candidate Profile</CardTitle>
-                      <CardDescription>Detailed information and analytics</CardDescription>
+          <div className="fixed inset-0 bg-white overflow-y-auto h-full w-full z-50">
+            <div className="container mx-auto px-4 py-8">
+              <div className="relative mx-auto max-w-2xl">
+                <Card className="border border-gray-100 shadow-lg">
+                  <CardHeader className="pb-4">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-xl">Candidate Profile</CardTitle>
+                        <CardDescription>Detailed information and analytics</CardDescription>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setSelectedCandidate(null)}
+                        className="text-gray-400 hover:text-gray-600"
+                      >
+                        <X className="h-5 w-5" />
+                      </Button>
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setSelectedCandidate(null)}
-                      className="text-gray-400 hover:text-gray-600"
-                    >
-                      <X className="h-5 w-5" />
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  {/* Basic Info */}
-                  <div className="flex items-center space-x-4">
-                    <div className="h-16 w-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-lg">
-                      <span className="text-xl font-medium text-white">
-                        {selectedCandidate.name?.charAt(0)?.toUpperCase() || "?"}
-                      </span>
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-xl font-bold text-gray-900">{selectedCandidate.name}</h4>
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-2">
-                        <div className="flex items-center text-gray-600">
-                          <Mail className="h-4 w-4 mr-1" />
-                          <span className="text-sm">{selectedCandidate.mail}</span>
-                        </div>
-                        {selectedCandidate.linkedin && (
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    {/* Basic Info */}
+                    <div className="flex items-center space-x-4">
+                      <div className="h-16 w-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-lg">
+                        <span className="text-xl font-medium text-white">
+                          {selectedCandidate.name?.charAt(0)?.toUpperCase() || "?"}
+                        </span>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-xl font-bold text-gray-900">{selectedCandidate.name}</h4>
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-2">
                           <div className="flex items-center text-gray-600">
-                            <Linkedin className="h-4 w-4 mr-1" />
-                            <a
-                              href={`https://linkedin.com/${selectedCandidate.linkedin}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-sm text-blue-600 hover:underline"
-                            >
-                              LinkedIn Profile
-                            </a>
+                            <Mail className="h-4 w-4 mr-1" />
+                            <span className="text-sm">{selectedCandidate.mail}</span>
                           </div>
-                        )}
+                          {selectedCandidate.linkedin && (
+                            <div className="flex items-center text-gray-600">
+                              <Linkedin className="h-4 w-4 mr-1" />
+                              <a
+                                href={`https://linkedin.com/${selectedCandidate.linkedin}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-sm text-blue-600 hover:underline"
+                              >
+                                LinkedIn Profile
+                              </a>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <Separator />
+                    <Separator />
 
-                  {/* Score and Rank */}
-                  <div className="grid grid-cols-2 gap-4">
-                    <Card className="border border-yellow-200 bg-yellow-50">
-                      <CardContent className="p-4">
-                        <div className="flex items-center">
-                          <Trophy className="h-5 w-5 text-yellow-600 mr-2" />
-                          <span className="text-sm font-medium text-gray-600">Rank</span>
-                        </div>
-                        <p className="text-2xl font-bold text-gray-900 mt-1">#{selectedCandidate.rank}</p>
-                      </CardContent>
-                    </Card>
-                    <Card className="border border-blue-200 bg-blue-50">
-                      <CardContent className="p-4">
-                        <div className="flex items-center">
-                          <Star className="h-5 w-5 text-blue-600 mr-2" />
-                          <span className="text-sm font-medium text-gray-600">Score</span>
-                        </div>
-                        <p className={`text-2xl font-bold mt-1 ${getScoreColor(selectedCandidate.score)}`}>
-                          {selectedCandidate.score}/100
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </div>
-
-                  {/* Education */}
-                  <div>
-                    <div className="flex items-center mb-3">
-                      <GraduationCap className="h-5 w-5 text-gray-600 mr-2" />
-                      <h5 className="font-semibold text-gray-900">Education</h5>
+                    {/* Score and Rank */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <Card className="border border-yellow-200 bg-yellow-50">
+                        <CardContent className="p-4">
+                          <div className="flex items-center">
+                            <Trophy className="h-5 w-5 text-yellow-600 mr-2" />
+                            <span className="text-sm font-medium text-gray-600">Rank</span>
+                          </div>
+                          <p className="text-2xl font-bold text-gray-900 mt-1">#{selectedCandidate.rank}</p>
+                        </CardContent>
+                      </Card>
+                      <Card className="border border-blue-200 bg-blue-50">
+                        <CardContent className="p-4">
+                          <div className="flex items-center">
+                            <Star className="h-5 w-5 text-blue-600 mr-2" />
+                            <span className="text-sm font-medium text-gray-600">Score</span>
+                          </div>
+                          <p className={`text-2xl font-bold mt-1 ${getScoreColor(selectedCandidate.score)}`}>
+                            {selectedCandidate.score}/100
+                          </p>
+                        </CardContent>
+                      </Card>
                     </div>
-                    <Card className="border border-gray-200 bg-gray-50">
-                      <CardContent className="p-4">
-                        <p className="text-gray-700">{selectedCandidate.education}</p>
-                      </CardContent>
-                    </Card>
-                  </div>
 
-                  {/* Work Experience */}
-                  <div>
-                    <div className="flex items-center mb-3">
-                      <Briefcase className="h-5 w-5 text-gray-600 mr-2" />
-                      <h5 className="font-semibold text-gray-900">Work Experience</h5>
+                    {/* Education */}
+                    <div>
+                      <div className="flex items-center mb-3">
+                        <GraduationCap className="h-5 w-5 text-gray-600 mr-2" />
+                        <h5 className="font-semibold text-gray-900">Education</h5>
+                      </div>
+                      <Card className="border border-gray-200 bg-gray-50">
+                        <CardContent className="p-4">
+                          <p className="text-gray-700">{selectedCandidate.education}</p>
+                        </CardContent>
+                      </Card>
                     </div>
-                    <Card className="border border-gray-200 bg-gray-50">
-                      <CardContent className="p-4">
-                        <p className="text-gray-700">{selectedCandidate.work_experience}</p>
-                      </CardContent>
-                    </Card>
-                  </div>
 
-                  {/* Skills */}
-                  <div>
-                    <div className="flex items-center mb-3">
-                      <Code className="h-5 w-5 text-gray-600 mr-2" />
-                      <h5 className="font-semibold text-gray-900">Skills ({selectedCandidate.skills?.length || 0})</h5>
+                    {/* Work Experience */}
+                    <div>
+                      <div className="flex items-center mb-3">
+                        <Briefcase className="h-5 w-5 text-gray-600 mr-2" />
+                        <h5 className="font-semibold text-gray-900">Work Experience</h5>
+                      </div>
+                      <Card className="border border-gray-200 bg-gray-50">
+                        <CardContent className="p-4">
+                          <p className="text-gray-700">{selectedCandidate.work_experience}</p>
+                        </CardContent>
+                      </Card>
                     </div>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedCandidate.skills?.map((skill, index) => (
-                        <Badge key={index} variant="secondary" className="text-sm">
-                          {skill}
-                        </Badge>
-                      ))}
+
+                    {/* Skills */}
+                    <div>
+                      <div className="flex items-center mb-3">
+                        <Code className="h-5 w-5 text-gray-600 mr-2" />
+                        <h5 className="font-semibold text-gray-900">Skills ({selectedCandidate.skills?.length || 0})</h5>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedCandidate.skills?.map((skill, index) => (
+                          <Badge key={index} variant="secondary" className="text-sm">
+                            {skill}
+                          </Badge>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         )}
