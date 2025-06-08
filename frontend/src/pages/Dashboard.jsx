@@ -565,7 +565,7 @@ const ResumeDashboard = () => {
 
         {/* Candidate Detail Modal */}
         {selectedCandidate && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm overflow-y-auto h-full w-full z-50 p-4">
+          <div className="fixed inset-0 bg-white overflow-y-auto h-full w-full z-50 p-4">
             <div className="relative top-4 mx-auto max-w-2xl">
               <Card className="border-0 shadow-2xl">
                 <CardHeader className="pb-4">
