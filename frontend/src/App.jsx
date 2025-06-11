@@ -7,6 +7,7 @@ import CandidateDetail from './pages/CandidateDetail';
 import LandingPage from './pages/landingPage.jsx'
 import TransitionLoading from './pages/loadingPage.jsx'
 import ResultPage from './pages/resultPage.jsx'
+import VoiceInterview from './pages/VoiceInterview'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/upload" element={<UploadResume />} />
             <Route path="/candidates" element={<CandidateList />} />
             <Route path="/candidates/:filename" element={<CandidateDetail />} />
+            <Route path="/interview/:interviewId" element={<VoiceInterview />} />
           </Routes>
         </main>
       </div>

@@ -17,15 +17,18 @@ import {
   Search,
   Download,
   RefreshCw,
+  Send,
 } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/card"
 import { Button } from "../components/button"
 import { Input } from "../components/input"
 import { Badge } from "../components/badge"
 import { Separator } from "../components/separator"
+import MailDialog from "../components/MailDialog"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../components/chart"
+import CandidateTable from "../components/CandidateTable"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell } from "recharts"
-import { API_BASE_URL } from '../config';
+import { API_BASE_URL, MAIL_SERVER_URL } from '../config';
 
 const ResumeDashboard = () => {
   const [candidates, setCandidates] = useState([])
@@ -37,6 +40,10 @@ const ResumeDashboard = () => {
   const [expandedRows, setExpandedRows] = useState(new Set())
   const [searchTerm, setSearchTerm] = useState("")
   const [filterScore, setFilterScore] = useState("")
+  const [mailDialogOpen, setMailDialogOpen] = useState(false)
+  const [mailRecipient, setMailRecipient] = useState("")
+  const [mailCandidateId, setMailCandidateId] = useState("")
+  const [mailCandidateName, setMailCandidateName] = useState("")
 
   useEffect(() => {
     fetchCandidates()
@@ -55,7 +62,7 @@ const ResumeDashboard = () => {
       }
     } catch (err) {
       setError("Failed to fetch data")
-      console.error("Error:", err)
+      console.error(err);
     } finally {
       setLoading(false)
     }
@@ -208,15 +215,11 @@ const ResumeDashboard = () => {
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
               <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-2">
-                Resume Ranking Dashboard
+                Candidates Ranking Dashboard
               </h1>
               <p className="text-gray-600 text-lg">Comprehensive analytics and candidate insights</p>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" size="sm">
-                <Download className="w-4 h-4 mr-2" />
-                Export
-              </Button>
               <Button onClick={fetchCandidates} size="sm">
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Refresh
@@ -336,23 +339,9 @@ const ResumeDashboard = () => {
                       dataKey="name"
                       width={100}
                       tick={{ fontSize: 12 }}
-                      tickFormatter={(value) => (value.length > 12 ? `${value.substring(0, 12)}...` : value)}
+                      tickFormatter={(value) => (value.length > 15 ? `${value.substring(0, 15)}...` : value)}
                     />
-                    <ChartTooltip
-                      content={({ active, payload }) => {
-                        if (active && payload && payload.length) {
-                          return (
-                            <div className="bg-white p-2 border border-gray-200 shadow-md rounded-md">
-                              <p className="font-medium">{payload[0].payload.name}</p>
-                              <p className="text-sm">
-                                Score: <span className="font-semibold">{payload[0].value}</span>/100
-                              </p>
-                            </div>
-                          )
-                        }
-                        return null
-                      }}
-                    />
+                    <ChartTooltip content={<ChartTooltipContent />} />
                     <Bar dataKey="score" radius={[0, 4, 4, 0]}>
                       {topCandidatesByScore.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
@@ -365,155 +354,152 @@ const ResumeDashboard = () => {
           </Card>
         </div>
 
-        {/* Filters and Search */}
-        <Card className="border-0 shadow-lg mb-6">
-          <CardContent className="p-6">
-            <div className="flex flex-col lg:flex-row gap-4">
-              <div className="flex-1">
+        {/* Candidates Table */}
+        <Card className="border-0 shadow-lg mb-8">
+          <CardHeader className="pb-2">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <Users className="h-5 w-5 text-blue-600" />
+                  <CardTitle className="text-lg">Candidate Rankings</CardTitle>
+                </div>
+                <CardDescription>Sorted by {sortBy === "rank" ? "rank" : "score"}</CardDescription>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
                   <Input
-                    placeholder="Search candidates by name or email..."
+                    type="search"
+                    placeholder="Search candidates..."
+                    className="pl-8 w-full sm:w-[200px] lg:w-[250px]"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
                   />
                 </div>
-              </div>
-              <div className="flex gap-2">
                 <select
+                  className="px-5 pr-10 py-2.5 rounded-lg border border-gray-300 bg-white shadow-sm text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out hover:border-gray-400 hover:shadow-md appearance-none"
                   value={filterScore}
                   onChange={(e) => setFilterScore(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">All Scores</option>
-                  <option value="90+">90+ Excellent</option>
-                  <option value="80-89">80-89 Good</option>
-                  <option value="70-79">70-79 Average</option>
-                  <option value="60-69">60-69 Below Average</option>
-                  <option value="0-59">0-59 Poor</option>
+                  <option value="90+">90+</option>
+                  <option value="80-89">80-89</option>
+                  <option value="70-79">70-79</option>
+                  <option value="60-69">60-69</option>
+                  <option value="0-59">Below 60</option>
                 </select>
               </div>
             </div>
-          </CardContent>
-        </Card>
-
-        {/* Leaderboard */}
-        <Card className="border-0 shadow-lg">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-xl">Candidate Leaderboard</CardTitle>
-            <CardDescription>
-              Showing {sortedCandidates.length} of {totalCandidates} candidates
-            </CardDescription>
           </CardHeader>
-          <CardContent className="p-0">
+          <CardContent>
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b">
+                <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-4 lg:px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-auto p-0 font-medium text-gray-500 hover:text-gray-700"
-                      >
-                        Rank
-                      </Button>
+                    <th className="px-4 lg:px-6 py-4 text-left text-sm font-medium text-gray-500 tracking-wider">
+                      Rank
                     </th>
-                    <th className="px-4 lg:px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-auto p-0 font-medium text-gray-500 hover:text-gray-700"
-                      >
-                        Candidate
-                      </Button>
+                    <th className="px-4 lg:px-6 py-4 text-left text-sm font-medium text-gray-500 tracking-wider">
+                      Candidate
                     </th>
-                    <th className="px-4 lg:px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleSort("score")}
-                        className="h-auto p-0 font-medium text-gray-500 hover:text-gray-700"
-                      >
+                    <th
+                      className="px-4 lg:px-6 py-4 text-left text-sm font-medium text-gray-500 tracking-wider cursor-pointer"
+                      onClick={() => handleSort("score")}
+                    >
+                      <div className="flex items-center">
                         Score
-                        {sortBy === "score" &&
-                          (sortOrder === "asc" ? (
-                            <ChevronUp className="ml-1 h-4 w-4" />
-                          ) : (
-                            <ChevronDown className="ml-1 h-4 w-4" />
-                          ))}
-                      </Button>
+                        {sortBy === "score" && (
+                          <span className="ml-1">
+                            {sortOrder === "asc" ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                          </span>
+                        )}
+                      </div>
                     </th>
-                    <th className="hidden lg:table-cell px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="hidden lg:table-cell px-6 py-4 text-left text-sm font-medium text-gray-500 tracking-wider">
                       Skills
                     </th>
-                    <th className="px-4 lg:px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
+                    <th className="px-4 lg:px-6 py-4 text-left text-sm font-medium text-gray-500 tracking-wider">
+                      Candidate Details
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {sortedCandidates.map((candidate) => {
-                    const candidateId = candidate._id?.$oid || candidate._id
-                    const isExpanded = expandedRows.has(candidateId)
-
+                    const candidateId = candidate._id?.$oid || candidate._id || candidate.id;
+                    const isExpanded = expandedRows.has(candidateId);
                     return (
                       <React.Fragment key={candidateId}>
-                        <tr className="hover:bg-gray-50 transition-colors">
+                        <tr className="hover:bg-gray-50">
                           <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
-                            <Badge className={`${getRankBadgeColor(candidate.rank)} border-0`}>#{candidate.rank}</Badge>
+                            <Badge className={`${getRankBadgeColor(candidate.rank)}`}>
+                              {candidate.rank}
+                            </Badge>
                           </td>
                           <td className="px-4 lg:px-6 py-4">
                             <div className="flex items-center">
-                              <div className="flex-shrink-0 h-10 w-10">
-                                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-md">
-                                  <span className="text-sm font-medium text-white">
-                                    {candidate.name?.charAt(0)?.toUpperCase() || "?"}
-                                  </span>
-                                </div>
+                              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-md">
+                                <span className="text-sm font-medium text-white">
+                                  {candidate.name?.charAt(0)?.toUpperCase() || "?"}
+                                </span>
                               </div>
-                              <div className="ml-4 min-w-0 flex-1">
-                                <div className="text-sm font-medium text-gray-900 truncate">{candidate.name}</div>
-                                <div className="text-sm text-gray-500 truncate">{candidate.mail}</div>
+                              <div className="ml-3">
+                                <p className="text-sm font-medium text-gray-900">{candidate.name}</p>
+                                <p className="text-xs text-gray-500">{candidate.mail}</p>
                               </div>
                             </div>
                           </td>
                           <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
-                            <div className={`text-sm ${getScoreColor(candidate.score)}`}>{candidate.score}/100</div>
+                            <div className={`text-lg ${getScoreColor(candidate.score)}`}>{candidate.score}</div>
                           </td>
                           <td className="hidden lg:table-cell px-6 py-4">
                             <div className="flex flex-wrap gap-1">
-                              {candidate.skills?.slice(0, 2).map((skill, index) => (
+                              {candidate.skills?.slice(0, 3).map((skill, index) => (
                                 <Badge key={index} variant="secondary" className="text-xs">
                                   {skill}
                                 </Badge>
                               ))}
-                              {candidate.skills?.length > 2 && (
+                              {candidate.skills?.length > 3 && (
                                 <Badge variant="outline" className="text-xs">
-                                  +{candidate.skills.length - 2}
+                                  +{candidate.skills.length - 3}
                                 </Badge>
                               )}
                             </div>
                           </td>
-                          <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
-                            <div className="flex gap-2">
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => toggleRowExpansion(candidateId)}
-                                className="text-blue-600 hover:text-blue-800"
-                              >
-                                {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setSelectedCandidate(candidate)}
-                                className="text-blue-600 hover:text-blue-800"
-                              >
-                                View
-                              </Button>
+                          <td className="px-4 lg:px-6 py-4 text-sm text-gray-500">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => toggleRowExpansion(candidateId)}
+                                  className="text-blue-600 hover:text-blue-800"
+                                >
+                                  {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => setSelectedCandidate(candidate)}
+                                  className="text-blue-600 hover:text-blue-800"
+                                >
+                                  View
+                                </Button>
+                                <div className="flex items-center gap-1">
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => {
+                                      setMailDialogOpen(true)
+                                      setMailRecipient(candidate.mail)
+                                      setMailCandidateId(candidate._id?.$oid || candidate._id || candidate.id)
+                                      setMailCandidateName(candidate.name)
+                                    }}
+                                    className="text-blue-600 hover:text-blue-800"
+                                  >
+                                    <Send className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </div>
                             </div>
                           </td>
                         </tr>
@@ -566,11 +552,11 @@ const ResumeDashboard = () => {
         {/* Candidate Detail Modal */}
         {selectedCandidate && (
           <div className="fixed inset-0 bg-white overflow-y-auto h-full w-full z-50">
-            <div className="container mx-auto px-4 py-8">
-              <div className="relative mx-auto max-w-2xl">
-                <Card className="border border-gray-100 shadow-lg">
+            <div className="container mx-auto px-4 py-6 lg:px-8">
+              <div className="max-w-4xl mx-auto">
+                <Card className="border-0 shadow-lg">
                   <CardHeader className="pb-4">
-                    <div className="flex justify-between items-start">
+                    <div className="flex items-center justify-between">
                       <div>
                         <CardTitle className="text-xl">Candidate Profile</CardTitle>
                         <CardDescription>Detailed information and analytics</CardDescription>
@@ -627,18 +613,26 @@ const ResumeDashboard = () => {
                             <Trophy className="h-5 w-5 text-yellow-600 mr-2" />
                             <span className="text-sm font-medium text-gray-600">Rank</span>
                           </div>
-                          <p className="text-2xl font-bold text-gray-900 mt-1">#{selectedCandidate.rank}</p>
+                          <div className="mt-2">
+                            <Badge className={`${getRankBadgeColor(selectedCandidate.rank)} text-lg px-3 py-1`}>
+                              {selectedCandidate.rank}
+                            </Badge>
+                          </div>
                         </CardContent>
                       </Card>
+
                       <Card className="border border-blue-200 bg-blue-50">
                         <CardContent className="p-4">
                           <div className="flex items-center">
                             <Star className="h-5 w-5 text-blue-600 mr-2" />
                             <span className="text-sm font-medium text-gray-600">Score</span>
                           </div>
-                          <p className={`text-2xl font-bold mt-1 ${getScoreColor(selectedCandidate.score)}`}>
-                            {selectedCandidate.score}/100
-                          </p>
+                          <div className="mt-2">
+                            <span className={`text-2xl font-bold ${getScoreColor(selectedCandidate.score)}`}>
+                              {selectedCandidate.score}
+                            </span>
+                            <span className="text-sm text-gray-500 ml-1">/100</span>
+                          </div>
                         </CardContent>
                       </Card>
                     </div>
@@ -649,9 +643,9 @@ const ResumeDashboard = () => {
                         <GraduationCap className="h-5 w-5 text-gray-600 mr-2" />
                         <h5 className="font-semibold text-gray-900">Education</h5>
                       </div>
-                      <Card className="border border-gray-200 bg-gray-50">
+                      <Card className="border border-gray-200">
                         <CardContent className="p-4">
-                          <p className="text-gray-700">{selectedCandidate.education}</p>
+                          <p className="text-gray-700 whitespace-pre-line">{selectedCandidate.education}</p>
                         </CardContent>
                       </Card>
                     </div>
@@ -662,9 +656,9 @@ const ResumeDashboard = () => {
                         <Briefcase className="h-5 w-5 text-gray-600 mr-2" />
                         <h5 className="font-semibold text-gray-900">Work Experience</h5>
                       </div>
-                      <Card className="border border-gray-200 bg-gray-50">
+                      <Card className="border border-gray-200">
                         <CardContent className="p-4">
-                          <p className="text-gray-700">{selectedCandidate.work_experience}</p>
+                          <p className="text-gray-700 whitespace-pre-line">{selectedCandidate.work_experience}</p>
                         </CardContent>
                       </Card>
                     </div>
@@ -689,9 +683,30 @@ const ResumeDashboard = () => {
             </div>
           </div>
         )}
+
+        {/* Mail Dialog */}
+        <MailDialog
+          open={mailDialogOpen}
+          onOpenChange={setMailDialogOpen}
+          recipient={mailRecipient}
+          candidateId={mailCandidateId}
+          candidateName={mailCandidateName}
+        />
+      </div>
+
+      <div className="mt-8 p-8">
+        <Card className="shadow-lg">
+          <CardHeader>
+            <CardTitle>Interview Status</CardTitle>
+            <CardDescription>Overview of all candidate interviews and their current status</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <CandidateTable />
+          </CardContent>
+        </Card>
       </div>
     </div>
   )
 }
 
-export default ResumeDashboard 
+export default ResumeDashboard
