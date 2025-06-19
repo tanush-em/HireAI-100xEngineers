@@ -549,6 +549,16 @@ const ResumeDashboard = () => {
           </CardContent>
         </Card>
 
+        <Card className="border-0 shadow-lg">
+          <CardHeader>
+            <CardTitle>Interview Status</CardTitle>
+            <CardDescription>Overview of all candidate interviews and their current status</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <CandidateTable />
+          </CardContent>
+        </Card>
+
         {/* Candidate Detail Modal */}
         {selectedCandidate && (
           <div className="fixed inset-0 bg-white overflow-y-auto h-full w-full z-50">
@@ -692,18 +702,6 @@ const ResumeDashboard = () => {
           candidateId={mailCandidateId}
           candidateName={mailCandidateName}
         />
-      </div>
-
-      <div className="mt-8 p-8">
-        <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle>Interview Status</CardTitle>
-            <CardDescription>Overview of all candidate interviews and their current status</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <CandidateTable />
-          </CardContent>
-        </Card>
       </div>
     </div>
   )

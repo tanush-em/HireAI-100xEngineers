@@ -47,7 +47,7 @@ const CandidateTable = () => {
   }
 
   return (
-    <div className="rounded-lg border shadow-sm overflow-hidden">
+    <div className="rounded-lg shadow-sm overflow-hidden bg-white">
       <Table>
         <TableHeader>
           <TableRow>
