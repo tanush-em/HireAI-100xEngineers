@@ -1,8 +1,24 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Home, Upload, Users, BarChart2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setUser(localStorage.getItem('user'));
+    }
+  }, [location]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUser(null);
+    navigate('/login');
+  };
 
   const isActive = (path) => {
     return location.pathname === path;
@@ -49,6 +65,19 @@ const Navbar = () => {
                 );
               })}
             </div>
+          </div>
+          <div className="flex items-center space-x-4">
+            {user ? (
+              <>
+                <span className="text-gray-700 text-sm">{user}</span>
+                <button onClick={handleLogout} className="btn-primary px-3 py-1 rounded" aria-label="Logout">Logout</button>
+              </>
+            ) : (
+              <>
+                <button onClick={() => navigate('/login')} className="btn-primary px-3 py-1 rounded" aria-label="Login">Login</button>
+                <button onClick={() => navigate('/signup')} className="border border-blue-600 text-blue-600 px-3 py-1 rounded" aria-label="Sign Up">Sign Up</button>
+              </>
+            )}
           </div>
         </div>
       </div>

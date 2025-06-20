@@ -11,6 +11,14 @@ def get_mongo_collection():
     db = client[db_name]
     return db["candidates"]
 
+def get_user_collection():
+    mongo_uri = os.getenv("MONGODB_URI")
+    client = MongoClient(mongo_uri)
+    parsed = urlparse(mongo_uri)
+    db_name = parsed.path.lstrip("/") or "resume_ranking"
+    db = client[db_name]
+    return db["users"]
+
 def append_ranks_to_candidates(candidates_info, rankings_text, session_id):
     ranking_blocks = rankings_text.strip().split("\n\n")
     name_to_score = {}

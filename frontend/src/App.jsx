@@ -8,6 +8,8 @@ import LandingPage from './pages/landingPage.jsx'
 import TransitionLoading from './pages/loadingPage.jsx'
 import ResultPage from './pages/resultPage.jsx'
 import VoiceInterview from './pages/VoiceInterview'
+import Login from './pages/Login.jsx';
+import Signup from './pages/Signup.jsx';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
             <Route path="/candidates" element={<CandidateList />} />
             <Route path="/candidates/:filename" element={<CandidateDetail />} />
             <Route path="/interview/:interviewId" element={<VoiceInterview />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
         </main>
       </div>

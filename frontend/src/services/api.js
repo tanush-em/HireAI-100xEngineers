@@ -28,4 +28,14 @@ export const getAllCandidates = async () => {
 export const getCandidate = async (filename) => {
   const response = await api.get(`/candidates/${filename}`);
   return response.data;
+};
+
+export const signup = async (email, password) => {
+  const response = await api.post('/signup', { email, password });
+  return response.data;
+};
+
+export const login = async (email, password) => {
+  const response = await api.post('/login', { email, password });
+  return response.data;
 }; 
