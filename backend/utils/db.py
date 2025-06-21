@@ -1,23 +1,48 @@
 import os
 from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
 from urllib.parse import urlparse
 from pprint import pprint
 
-def get_mongo_collection():
+def validate_mongodb_connection():
+    """Validate MongoDB connection and return client if successful"""
     mongo_uri = os.getenv("MONGODB_URI")
-    client = MongoClient(mongo_uri)
-    parsed = urlparse(mongo_uri)
-    db_name = parsed.path.lstrip("/") or "resume_ranking"
-    db = client[db_name]
-    return db["candidates"]
+    if not mongo_uri:
+        raise ValueError("MONGODB_URI environment variable is required")
+    
+    try:
+        client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
+        # Test the connection
+        client.admin.command('ping')
+        return client
+    except (ConnectionFailure, ServerSelectionTimeoutError) as e:
+        raise ConnectionError(f"Failed to connect to MongoDB: {str(e)}")
+    except Exception as e:
+        raise Exception(f"Unexpected error connecting to MongoDB: {str(e)}")
+
+def get_mongo_collection():
+    """Get MongoDB collection with proper error handling"""
+    try:
+        client = validate_mongodb_connection()
+        parsed = urlparse(os.getenv("MONGODB_URI"))
+        db_name = parsed.path.lstrip("/") or "resume_ranking"
+        db = client[db_name]
+        return db["candidates"]
+    except Exception as e:
+        print(f"Error getting MongoDB collection: {str(e)}")
+        raise
 
 def get_user_collection():
-    mongo_uri = os.getenv("MONGODB_URI")
-    client = MongoClient(mongo_uri)
-    parsed = urlparse(mongo_uri)
-    db_name = parsed.path.lstrip("/") or "resume_ranking"
-    db = client[db_name]
-    return db["users"]
+    """Get MongoDB users collection with proper error handling"""
+    try:
+        client = validate_mongodb_connection()
+        parsed = urlparse(os.getenv("MONGODB_URI"))
+        db_name = parsed.path.lstrip("/") or "resume_ranking"
+        db = client[db_name]
+        return db["users"]
+    except Exception as e:
+        print(f"Error getting MongoDB users collection: {str(e)}")
+        raise
 
 def append_ranks_to_candidates(candidates_info, rankings_text, session_id):
     ranking_blocks = rankings_text.strip().split("\n\n")

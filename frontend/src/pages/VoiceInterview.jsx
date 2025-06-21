@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import Vapi from "@vapi-ai/web"
 import { Button } from "../components/button"
 import { Card, CardContent, CardHeader, CardTitle } from "../components/card"
-import { MAIL_SERVER_URL } from "../config"
+import { VAPI_PUBLIC_KEY, VAPI_ASSISTANT_ID, MAIL_SERVER_URL } from "../config"
 import { X, Mic, Volume2 } from "lucide-react"
 
 const VoiceInterview = () => {
@@ -101,7 +101,7 @@ const VoiceInterview = () => {
     // Initialize Vapi
     const initializeVapi = () => {
       try {
-        const vapi = new Vapi(import.meta.env.VITE_VAPI_PUBLIC_KEY || "YOUR_VAPI_PUBLIC_KEY")
+        const vapi = new Vapi(VAPI_PUBLIC_KEY)
         vapiRef.current = vapi
 
         vapi.on("call-start", () => setActive(true))
@@ -145,7 +145,7 @@ const VoiceInterview = () => {
       vapiRef.current.stop()
     } else {
       try {
-        await vapiRef.current.start(import.meta.env.VITE_VAPI_ASSISTANT_ID || "YOUR_VAPI_ASSISTANT_ID")
+        await vapiRef.current.start(VAPI_ASSISTANT_ID)
       } catch (err) {
         console.error("Error starting Vapi call:", err)
         setError("Failed to start voice interview")

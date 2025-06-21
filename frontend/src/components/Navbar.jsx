@@ -1,23 +1,14 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Home, Upload, Users, BarChart2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setUser(localStorage.getItem('user'));
-    }
-  }, [location]);
+  const { user, logout, isAuthenticated } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setUser(null);
-    navigate('/login');
+    logout();
   };
 
   const isActive = (path) => {
@@ -26,9 +17,9 @@ const Navbar = () => {
 
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
-    { path: '/upload', label: 'Upload', icon: Upload },
-    { path: '/dashboard', label: 'Dashboard', icon: BarChart2 },
-    // { path: '/candidates', label: 'Candidates', icon: Users },
+    { path: '/upload', label: 'Upload', icon: Upload, protected: true },
+    { path: '/dashboard', label: 'Dashboard', icon: BarChart2, protected: true },
+    // { path: '/candidates', label: 'Candidates', icon: Users, protected: true },
   ];
 
   return (
@@ -49,6 +40,10 @@ const Navbar = () => {
             <div className="hidden sm:ml-6 sm:flex sm:space-x-4">
               {navItems.map((item) => {
                 const Icon = item.icon;
+                // Only show protected items if user is authenticated
+                if (item.protected && !isAuthenticated()) {
+                  return null;
+                }
                 return (
                   <Link
                     key={item.path}
@@ -67,15 +62,33 @@ const Navbar = () => {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            {user ? (
+            {isAuthenticated() ? (
               <>
                 <span className="text-gray-700 text-sm">{user}</span>
-                <button onClick={handleLogout} className="btn-primary px-3 py-1 rounded" aria-label="Logout">Logout</button>
+                <button 
+                  onClick={handleLogout} 
+                  className="btn-primary px-3 py-1 rounded" 
+                  aria-label="Logout"
+                >
+                  Logout
+                </button>
               </>
             ) : (
               <>
-                <button onClick={() => navigate('/login')} className="btn-primary px-3 py-1 rounded" aria-label="Login">Login</button>
-                <button onClick={() => navigate('/signup')} className="border border-blue-600 text-blue-600 px-3 py-1 rounded" aria-label="Sign Up">Sign Up</button>
+                <button 
+                  onClick={() => navigate('/login')} 
+                  className="btn-primary px-3 py-1 rounded" 
+                  aria-label="Login"
+                >
+                  Login
+                </button>
+                <button 
+                  onClick={() => navigate('/signup')} 
+                  className="border border-blue-600 text-blue-600 px-3 py-1 rounded" 
+                  aria-label="Sign Up"
+                >
+                  Sign Up
+                </button>
               </>
             )}
           </div>

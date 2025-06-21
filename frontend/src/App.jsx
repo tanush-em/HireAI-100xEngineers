@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import ResumeDashboard from './pages/Dashboard';
 import UploadResume from './pages/UploadResume';
@@ -14,23 +16,58 @@ import Signup from './pages/Signup.jsx';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-100">
-        <Navbar />
-        <main className="container mx-auto w-screen bg-gray-100">
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/dashboard" element={<ResumeDashboard />} />
-            <Route path="/loading" element={<TransitionLoading />} />
-            <Route path="/results" element={<ResultPage />} />
-            <Route path="/upload" element={<UploadResume />} />
-            <Route path="/candidates" element={<CandidateList />} />
-            <Route path="/candidates/:filename" element={<CandidateDetail />} />
-            <Route path="/interview/:interviewId" element={<VoiceInterview />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Routes>
-        </main>
-      </div>
+      <AuthProvider>
+        <div className="min-h-screen bg-gray-100">
+          <Navbar />
+          <main className="container mx-auto w-screen bg-gray-100">
+            <Routes>
+              {/* Public routes */}
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              
+              {/* Protected routes */}
+              <Route path="/dashboard" element={
+                <ProtectedRoute>
+                  <ResumeDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/upload" element={
+                <ProtectedRoute>
+                  <UploadResume />
+                </ProtectedRoute>
+              } />
+              <Route path="/candidates" element={
+                <ProtectedRoute>
+                  <CandidateList />
+                </ProtectedRoute>
+              } />
+              <Route path="/candidates/:filename" element={
+                <ProtectedRoute>
+                  <CandidateDetail />
+                </ProtectedRoute>
+              } />
+              <Route path="/interview/:interviewId" element={
+                <ProtectedRoute>
+                  <VoiceInterview />
+                </ProtectedRoute>
+              } />
+              
+              {/* Processing routes */}
+              <Route path="/loading" element={
+                <ProtectedRoute>
+                  <TransitionLoading />
+                </ProtectedRoute>
+              } />
+              <Route path="/results" element={
+                <ProtectedRoute>
+                  <ResultPage />
+                </ProtectedRoute>
+              } />
+            </Routes>
+          </main>
+        </div>
+      </AuthProvider>
     </Router>
   );
 }

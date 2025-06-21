@@ -4,6 +4,7 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_core.documents import Document
 from utils.helpers import from_chain
 from utils.db import get_mongo_collection
+from utils.auth import token_required
 from pprint import pprint
 
 chat_blueprint = Blueprint("chat", __name__)
@@ -50,6 +51,7 @@ def build_vectorstore_for_session(session_id):
 
 # === Route to return resume data and trigger LLM embedding ===
 @chat_blueprint.route("/result/<session_id>", methods=["GET"])
+@token_required
 def result_for_session(session_id):
     try:
         candidates = build_vectorstore_for_session(session_id)
@@ -64,6 +66,7 @@ def result_for_session(session_id):
 
 # === Chat route using session-specific vectorstore ===
 @chat_blueprint.route("/chat/<session_id>", methods=["POST"])
+@token_required
 def chat_with_session(session_id):
     data = request.get_json()
     query = data.get("query")
