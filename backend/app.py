@@ -17,7 +17,16 @@ from utils.auth import validate_environment
 from utils.db import validate_mongodb_connection
 
 app = Flask(__name__)
-CORS(app)
+
+# Configure CORS to allow requests from Vercel frontend and other origins
+CORS(app, origins=[
+    'https://hireai-radons.vercel.app',  # Production frontend
+    'http://localhost:3000',             # Local development frontend
+    'http://localhost:5173',             # Vite dev server
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:5173'
+], supports_credentials=True, methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+   allow_headers=['Content-Type', 'Authorization', 'X-Requested-With'])
 
 # Validate environment variables on startup
 try:
